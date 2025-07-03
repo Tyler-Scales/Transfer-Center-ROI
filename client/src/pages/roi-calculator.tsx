@@ -2,7 +2,12 @@ import { useState, useCallback } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Building2, Settings, Calculator, TrendingUp, BarChart3 } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Building2, Settings, Calculator, TrendingUp, BarChart3, Mail, Send } from "lucide-react";
+import { useMutation } from "@tanstack/react-query";
+import { apiRequest } from "@/lib/queryClient";
+import { useToast } from "@/hooks/use-toast";
 
 // Calculation constants
 const VARIABLE_COST_PER_TRANSFER = 200;
@@ -25,6 +30,10 @@ interface CalculationResults {
 export default function ROICalculator() {
   const [staffedBeds, setStaffedBeds] = useState<string>("");
   const [results, setResults] = useState<CalculationResults | null>(null);
+  const [emailTo, setEmailTo] = useState<string>("");
+  const [emailFrom, setEmailFrom] = useState<string>("");
+  const [isEmailDialogOpen, setIsEmailDialogOpen] = useState<boolean>(false);
+  const { toast } = useToast();
 
   const formatCurrency = (amount: number): string => {
     return new Intl.NumberFormat('en-US', {
@@ -37,6 +46,99 @@ export default function ROICalculator() {
 
   const formatNumber = (number: number): string => {
     return new Intl.NumberFormat('en-US').format(number);
+  };
+
+  const emailMutation = useMutation({
+    mutationFn: async ({ to, from, subject, html }: { to: string; from: string; subject: string; html: string }) => {
+      return apiRequest('POST', '/api/send-email', { to, from, subject, html });
+    },
+    onSuccess: () => {
+      toast({
+        title: "Email sent successfully!",
+        description: "The ROI calculation has been sent to your email.",
+      });
+      setIsEmailDialogOpen(false);
+      setEmailTo("");
+      setEmailFrom("");
+    },
+    onError: () => {
+      toast({
+        title: "Failed to send email",
+        description: "Please check your email addresses and try again.",
+        variant: "destructive",
+      });
+    },
+  });
+
+  const generateEmailHTML = (results: CalculationResults, beds: number): string => {
+    return `
+      <!DOCTYPE html>
+      <html>
+        <head>
+          <style>
+            body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+            .header { background: linear-gradient(135deg, #F97316, #0D9488); color: white; padding: 20px; text-align: center; }
+            .content { padding: 20px; }
+            .result-box { background: #F97316; color: white; padding: 20px; text-align: center; margin: 20px 0; border-radius: 8px; }
+            .calculation { background: #f8f9fa; padding: 15px; margin: 10px 0; border-radius: 5px; }
+            .assumption { background: #e3f2fd; padding: 10px; margin: 5px 0; border-radius: 4px; }
+            .footer { text-align: center; color: #666; font-size: 12px; margin-top: 30px; }
+          </style>
+        </head>
+        <body>
+          <div class="header">
+            <h1>Transfer Center ROI Analysis</h1>
+            <p>Conduit Health Partners</p>
+          </div>
+          
+          <div class="content">
+            <h2>ROI Calculation Results</h2>
+            <p><strong>Hospital Size:</strong> ${formatNumber(beds)} staffed beds</p>
+            
+            <div class="result-box">
+              <h2>Final ROI: ${results.finalROI.toFixed(1)}:1</h2>
+              <p>Net Annual Financial Benefit: ${formatCurrency(results.netAnnualFinancialBenefit)}</p>
+            </div>
+            
+            <h3>Calculation Breakdown</h3>
+            
+            <div class="calculation">
+              <h4>Annual Transfer Volume</h4>
+              <p>Total Annual Transfers: ${formatNumber(results.totalAnnualTransfers)}</p>
+              <p class="assumption"><em>Assumption: 12 transfers per staffed bed per year</em></p>
+            </div>
+            
+            <div class="calculation">
+              <h4>Investment Cost</h4>
+              <p>Total Annual Investment Cost: ${formatCurrency(results.totalAnnualInvestmentCost)}</p>
+              <p class="assumption"><em>Assumption: $150,000 annual investment</em></p>
+            </div>
+            
+            <div class="calculation">
+              <h4>Financial Benefits</h4>
+              <p>Operational Cost Savings: ${formatCurrency(150000)}</p>
+              <p>Recaptured Leakage Revenue: ${formatCurrency(results.recapturedLeakageRevenue)}</p>
+              <p>New Growth Revenue: ${formatCurrency(results.newGrowthRevenue)}</p>
+              <p><strong>Total Gross Financial Benefit: ${formatCurrency(results.totalGrossFinancialBenefit)}</strong></p>
+            </div>
+            
+            <div class="footer">
+              <p>This analysis is based on industry-standard assumptions for hospital transfer center operations.</p>
+              <p>Generated by Conduit Health Partners ROI Calculator</p>
+            </div>
+          </div>
+        </body>
+      </html>
+    `;
+  };
+
+  const handleSendEmail = () => {
+    if (!results || !emailTo || !emailFrom) return;
+    
+    const subject = `Transfer Center ROI Analysis - ${results.finalROI.toFixed(1)}:1 ROI`;
+    const html = generateEmailHTML(results, parseInt(staffedBeds));
+    
+    emailMutation.mutate({ to: emailTo, from: emailFrom, subject, html });
   };
 
 
@@ -260,7 +362,7 @@ export default function ROICalculator() {
                     <p className="text-xl text-white opacity-90">ROI Ratio</p>
                   </div>
                   
-                  <div className="bg-gray-50 rounded-lg p-6">
+                  <div className="bg-gray-50 rounded-lg p-6 mb-6">
                     <p className="text-lg text-gray-700 leading-relaxed">
                       An ROI ratio of <span className="font-bold text-orange-600">{results.finalROI.toFixed(1)}:1</span> means 
                       that for every <span className="font-semibold">$1</span> invested in your transfer center operations, 
@@ -268,6 +370,68 @@ export default function ROICalculator() {
                       This represents a highly favorable investment opportunity for your hospital.
                     </p>
                   </div>
+                  
+                  {/* Email Button */}
+                  <Dialog open={isEmailDialogOpen} onOpenChange={setIsEmailDialogOpen}>
+                    <DialogTrigger asChild>
+                      <Button className="bg-orange-500 hover:bg-orange-600 text-white px-8 py-3 rounded-lg font-semibold flex items-center gap-2">
+                        <Mail className="h-5 w-5" />
+                        Email Results
+                      </Button>
+                    </DialogTrigger>
+                    <DialogContent className="sm:max-w-md">
+                      <DialogHeader>
+                        <DialogTitle className="flex items-center gap-2">
+                          <Mail className="h-5 w-5 text-orange-500" />
+                          Email ROI Analysis
+                        </DialogTitle>
+                      </DialogHeader>
+                      <div className="space-y-4">
+                        <div>
+                          <Label htmlFor="emailFrom">From Email Address</Label>
+                          <Input
+                            id="emailFrom"
+                            type="email"
+                            placeholder="your.email@hospital.com"
+                            value={emailFrom}
+                            onChange={(e) => setEmailFrom(e.target.value)}
+                          />
+                        </div>
+                        <div>
+                          <Label htmlFor="emailTo">To Email Address</Label>
+                          <Input
+                            id="emailTo"
+                            type="email"
+                            placeholder="recipient@hospital.com"
+                            value={emailTo}
+                            onChange={(e) => setEmailTo(e.target.value)}
+                          />
+                        </div>
+                        <div className="flex gap-2">
+                          <Button
+                            onClick={handleSendEmail}
+                            disabled={!emailTo || !emailFrom || emailMutation.isPending}
+                            className="flex-1 bg-orange-500 hover:bg-orange-600"
+                          >
+                            {emailMutation.isPending ? (
+                              "Sending..."
+                            ) : (
+                              <>
+                                <Send className="h-4 w-4 mr-2" />
+                                Send Email
+                              </>
+                            )}
+                          </Button>
+                          <Button
+                            variant="outline"
+                            onClick={() => setIsEmailDialogOpen(false)}
+                          >
+                            Cancel
+                          </Button>
+                        </div>
+                      </div>
+                    </DialogContent>
+                  </Dialog>
                 </div>
               </CardContent>
             </Card>
