@@ -77,55 +77,177 @@ export default function ROICalculator() {
       <html>
         <head>
           <style>
-            body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
-            .header { background: linear-gradient(135deg, #F97316, #0D9488); color: white; padding: 20px; text-align: center; }
-            .content { padding: 20px; }
-            .result-box { background: #F97316; color: white; padding: 20px; text-align: center; margin: 20px 0; border-radius: 8px; }
-            .calculation { background: #f8f9fa; padding: 15px; margin: 10px 0; border-radius: 5px; }
-            .assumption { background: #e3f2fd; padding: 10px; margin: 5px 0; border-radius: 4px; }
-            .footer { text-align: center; color: #666; font-size: 12px; margin-top: 30px; }
+            body { 
+              font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+              line-height: 1.6; 
+              color: #333; 
+              max-width: 600px; 
+              margin: 0 auto; 
+              background-color: #f9f9f9; 
+            }
+            .container { background: white; margin: 20px 0; }
+            .header { 
+              background: linear-gradient(135deg, #F97316, #0D9488); 
+              color: white; 
+              padding: 30px 20px; 
+              text-align: center; 
+            }
+            .content { padding: 30px; }
+            .intro { font-size: 16px; margin-bottom: 30px; }
+            .roi-highlight { 
+              background: linear-gradient(135deg, #F97316, #0D9488); 
+              color: white; 
+              padding: 30px; 
+              text-align: center; 
+              margin: 30px 0; 
+              border-radius: 12px; 
+            }
+            .roi-number { font-size: 48px; font-weight: bold; margin: 10px 0; }
+            .section { margin: 25px 0; }
+            .section-title { 
+              color: #F97316; 
+              font-size: 18px; 
+              font-weight: bold; 
+              margin-bottom: 15px; 
+              border-bottom: 2px solid #F97316; 
+              padding-bottom: 5px; 
+            }
+            .assumption-grid { 
+              display: grid; 
+              grid-template-columns: 1fr 1fr; 
+              gap: 15px; 
+              margin: 15px 0; 
+            }
+            .assumption-item { 
+              background: #f8f9fa; 
+              padding: 12px; 
+              border-radius: 6px; 
+              border-left: 4px solid #0D9488; 
+            }
+            .calculation-step { 
+              background: #f8f9fa; 
+              padding: 15px; 
+              margin: 15px 0; 
+              border-radius: 8px; 
+              border-left: 4px solid #F97316; 
+            }
+            .cta-section { 
+              background: #f8f9fa; 
+              padding: 25px; 
+              margin: 30px 0; 
+              border-radius: 12px; 
+              text-align: center; 
+            }
+            .cta-button { 
+              display: inline-block; 
+              background: #0D9488; 
+              color: white; 
+              padding: 12px 25px; 
+              text-decoration: none; 
+              border-radius: 6px; 
+              font-weight: bold; 
+              margin: 10px; 
+            }
+            .footer { 
+              text-align: center; 
+              color: #666; 
+              font-size: 14px; 
+              margin-top: 30px; 
+              padding: 20px; 
+              background: #f8f9fa; 
+            }
           </style>
         </head>
         <body>
-          <div class="header">
-            <h1>Transfer Center ROI Analysis</h1>
-            <p>Conduit Health Partners</p>
-          </div>
-          
-          <div class="content">
-            <h2>ROI Calculation Results</h2>
-            <p><strong>Hospital Size:</strong> ${formatNumber(beds)} staffed beds</p>
-            
-            <div class="result-box">
-              <h2>Final ROI: ${results.finalROI.toFixed(1)}:1</h2>
-              <p>Net Annual Financial Benefit: ${formatCurrency(results.netAnnualFinancialBenefit)}</p>
+          <div class="container">
+            <div class="header">
+              <h1>Transfer Center ROI Analysis</h1>
+              <p>Conduit Health Partners</p>
             </div>
             
-            <h3>Calculation Breakdown</h3>
-            
-            <div class="calculation">
-              <h4>Annual Transfer Volume</h4>
-              <p>Total Annual Transfers: ${formatNumber(results.totalAnnualTransfers)}</p>
-              <p class="assumption"><em>Assumption: 12 transfers per staffed bed per year</em></p>
-            </div>
-            
-            <div class="calculation">
-              <h4>Investment Cost</h4>
-              <p>Total Annual Investment Cost: ${formatCurrency(results.totalAnnualInvestmentCost)}</p>
-              <p class="assumption"><em>Assumption: $150,000 annual investment</em></p>
-            </div>
-            
-            <div class="calculation">
-              <h4>Financial Benefits</h4>
-              <p>Operational Cost Savings: ${formatCurrency(150000)}</p>
-              <p>Recaptured Leakage Revenue: ${formatCurrency(results.recapturedLeakageRevenue)}</p>
-              <p>New Growth Revenue: ${formatCurrency(results.newGrowthRevenue)}</p>
-              <p><strong>Total Gross Financial Benefit: ${formatCurrency(results.totalGrossFinancialBenefit)}</strong></p>
-            </div>
-            
-            <div class="footer">
-              <p>This analysis is based on industry-standard assumptions for hospital transfer center operations.</p>
-              <p>Generated by Conduit Health Partners ROI Calculator</p>
+            <div class="content">
+              <div class="intro">
+                <p>I hope this analysis finds you well. Based on your hospital's ${formatNumber(beds)} staffed beds, I've prepared a comprehensive ROI analysis for implementing a dedicated transfer center operation.</p>
+                
+                <p>The results show significant potential for your organization, and I believe this investment could substantially impact your hospital's operational efficiency and revenue growth.</p>
+              </div>
+              
+              <div class="roi-highlight">
+                <h2>Your Projected ROI</h2>
+                <div class="roi-number">${results.finalROI.toFixed(1)}:1</div>
+                <p>For every $1 invested, you can expect $${results.finalROI.toFixed(1)} in return</p>
+                <p><strong>Net Annual Financial Benefit: ${formatCurrency(results.netAnnualFinancialBenefit)}</strong></p>
+              </div>
+              
+              <div class="section">
+                <div class="section-title">Key Assumptions</div>
+                <div class="assumption-grid">
+                  <div class="assumption-item">
+                    <strong>Annual Investment:</strong><br>$150,000
+                  </div>
+                  <div class="assumption-item">
+                    <strong>Transfers per Bed:</strong><br>12 annually
+                  </div>
+                  <div class="assumption-item">
+                    <strong>Cost per Transfer:</strong><br>$200
+                  </div>
+                  <div class="assumption-item">
+                    <strong>Net Revenue per Admission:</strong><br>$10,000
+                  </div>
+                  <div class="assumption-item">
+                    <strong>Leakage Rate:</strong><br>20%
+                  </div>
+                  <div class="assumption-item">
+                    <strong>Growth Rate:</strong><br>1% new volume
+                  </div>
+                </div>
+              </div>
+              
+              <div class="section">
+                <div class="section-title">Financial Impact Breakdown</div>
+                
+                <div class="calculation-step">
+                  <h4>Annual Transfer Volume</h4>
+                  <p>${formatNumber(beds)} beds × 12 transfers = <strong>${formatNumber(results.totalAnnualTransfers)} total transfers</strong></p>
+                </div>
+                
+                <div class="calculation-step">
+                  <h4>Investment Cost</h4>
+                  <p>${formatNumber(results.totalAnnualTransfers)} transfers × $200 = <strong>${formatCurrency(results.totalAnnualInvestmentCost)}</strong></p>
+                </div>
+                
+                <div class="calculation-step">
+                  <h4>Financial Benefits</h4>
+                  <p>• Operational Cost Savings: <strong>${formatCurrency(150000)}</strong></p>
+                  <p>• Recaptured Leakage Revenue: <strong>${formatCurrency(results.recapturedLeakageRevenue)}</strong></p>
+                  <p>• New Growth Revenue: <strong>${formatCurrency(results.newGrowthRevenue)}</strong></p>
+                  <p style="border-top: 1px solid #ddd; padding-top: 10px; margin-top: 10px;">
+                    <strong>Total Gross Financial Benefit: ${formatCurrency(results.totalGrossFinancialBenefit)}</strong>
+                  </p>
+                </div>
+              </div>
+              
+              <div class="cta-section">
+                <h3>Ready to Explore This Opportunity?</h3>
+                <p>These numbers represent a compelling business case, but every hospital's situation is unique. I'd love to discuss how we can tailor this analysis to your specific operational context and explore implementation strategies that maximize your ROI.</p>
+                
+                <p>Let's schedule a conversation to dive deeper into:</p>
+                <ul style="text-align: left; display: inline-block;">
+                  <li>Customizing assumptions to your hospital's data</li>
+                  <li>Implementation timeline and milestones</li>
+                  <li>Risk mitigation strategies</li>
+                  <li>Potential for even greater returns</li>
+                </ul>
+                
+                <p><strong>I'm here to help you make the most informed decision for your organization.</strong></p>
+                
+                <a href="https://www.linkedin.com/in/tylerwallace/" class="cta-button">Connect with Tyler Wallace</a>
+              </div>
+              
+              <div class="footer">
+                <p>This analysis is based on industry-standard benchmarks and assumptions. Actual results may vary based on your hospital's specific circumstances and implementation approach.</p>
+                <p><strong>Generated by Conduit Health Partners ROI Calculator</strong></p>
+              </div>
             </div>
           </div>
         </body>
