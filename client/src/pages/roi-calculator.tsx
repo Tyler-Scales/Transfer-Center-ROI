@@ -264,7 +264,7 @@ export default function ROICalculator() {
   const handleSendEmail = () => {
     if (!results || !emailTo) return;
     
-    const subject = `Transfer Center ROI Analysis - ${results.finalROI.toFixed(1)}:1 ROI`;
+    const subject = `Transfer Center ROI Analysis - ${results.finalROI.toFixed(2)}:1 ROI`;
     const html = generateEmailHTML(results, parseInt(staffedBeds));
     
     emailMutation.mutate({ to: emailTo, subject, html });
@@ -457,16 +457,16 @@ export default function ROICalculator() {
                 
                 <div className="bg-gradient-to-r from-orange-500 to-teal-600 rounded-2xl p-8 mb-6">
                   <div className="text-7xl font-bold text-white mb-2">
-                    {results.finalROI.toFixed(1)}:1
+                    {results.finalROI.toFixed(2)}:1
                   </div>
                   <p className="text-xl text-white opacity-90">ROI Ratio</p>
                 </div>
                 
                 <div className="bg-gray-50 rounded-lg p-6 mb-6">
                   <p className="text-lg text-gray-700 leading-relaxed">
-                    An ROI ratio of <span className="font-bold text-orange-600">{results.finalROI.toFixed(1)}:1</span> means 
+                    An ROI ratio of <span className="font-bold text-orange-600">{results.finalROI.toFixed(2)}:1</span> means 
                     that for every <span className="font-semibold">$1</span> invested in your transfer center operations, 
-                    you can expect to receive <span className="font-bold text-green-600">${results.finalROI.toFixed(1)}</span> in return. 
+                    you can expect to receive <span className="font-bold text-green-600">${results.finalROI.toFixed(2)}</span> in return. 
                     This represents a highly favorable investment opportunity for your hospital.
                   </p>
                 </div>
