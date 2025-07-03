@@ -365,7 +365,7 @@ export default function ROICalculator() {
       <div className="max-w-4xl mx-auto mb-8">
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold text-gray-800 mb-4">Transfer Center ROI Calculator</h1>
-          <p className="text-gray-600 text-lg">This ROI calculator determines how much you can save when you trust Conduit with your transfer center needs. Enter your hospital's staffed bed count below to see your potential return on investment from partnering with our expert transfer center team.</p>
+          <p className="text-gray-600 text-lg">This ROI calculator determines how much you can save when you trust <span className="font-bold text-conduit-orange">Conduit</span> with your transfer center needs. Enter your hospital's staffed bed count below to see your potential return on investment from partnering with our expert transfer center team.</p>
         </div>
       </div>
 
