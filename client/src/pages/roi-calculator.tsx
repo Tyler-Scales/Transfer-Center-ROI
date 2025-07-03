@@ -258,25 +258,13 @@ export default function ROICalculator() {
                     <p className="text-xl text-white opacity-90">ROI Ratio</p>
                   </div>
                   
-                  <div className="grid md:grid-cols-3 gap-4 text-center">
-                    <div className="bg-gray-50 rounded-lg p-4">
-                      <div className="text-2xl font-bold text-conduit-orange">
-                        {formatNumber(parseInt(staffedBeds))}
-                      </div>
-                      <p className="text-sm text-gray-600">Staffed Beds</p>
-                    </div>
-                    <div className="bg-gray-50 rounded-lg p-4">
-                      <div className="text-2xl font-bold text-green-600">
-                        {formatCurrency(results.netAnnualFinancialBenefit)}
-                      </div>
-                      <p className="text-sm text-gray-600">Annual Net Benefit</p>
-                    </div>
-                    <div className="bg-gray-50 rounded-lg p-4">
-                      <div className="text-2xl font-bold text-gray-700">
-                        {formatCurrency(results.totalAnnualInvestmentCost)}
-                      </div>
-                      <p className="text-sm text-gray-600">Annual Investment</p>
-                    </div>
+                  <div className="bg-gray-50 rounded-lg p-6">
+                    <p className="text-lg text-gray-700 leading-relaxed">
+                      An ROI ratio of <span className="font-bold text-orange-600">{results.finalROI.toFixed(1)}:1</span> means 
+                      that for every <span className="font-semibold">$1</span> invested in your transfer center operations, 
+                      you can expect to receive <span className="font-bold text-green-600">${results.finalROI.toFixed(1)}</span> in return. 
+                      This represents a highly favorable investment opportunity for your hospital.
+                    </p>
                   </div>
                 </div>
               </CardContent>
