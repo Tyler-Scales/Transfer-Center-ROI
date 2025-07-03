@@ -110,6 +110,7 @@ Comprehensive component library based on shadcn/ui including:
 Changelog:
 - July 03, 2025. Initial setup with hospital transfer center ROI calculator
 - July 03, 2025. Updated branding to Conduit Health Partners with orange/teal color scheme and logo integration
+- July 03, 2025. Fixed JSX syntax errors and improved header section with cleaner layout, enhanced description text, and larger Email Results button
 ```
 
 ## User Preferences
