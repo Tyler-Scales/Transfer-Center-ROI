@@ -488,8 +488,8 @@ export default function ROICalculator() {
                 
                 <Dialog open={isEmailDialogOpen} onOpenChange={setIsEmailDialogOpen}>
                   <DialogTrigger asChild>
-                    <Button className="bg-orange-500 hover:bg-orange-600 text-white px-8 py-3 rounded-lg font-semibold flex items-center gap-2 whitespace-nowrap">
-                      <Mail className="h-5 w-5" />
+                    <Button className="bg-orange-500 hover:bg-orange-600 text-white px-12 py-4 rounded-lg font-semibold text-lg flex items-center gap-3 whitespace-nowrap">
+                      <Mail className="h-6 w-6" />
                       Email Results
                     </Button>
                   </DialogTrigger>
