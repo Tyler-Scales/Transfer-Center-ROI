@@ -364,10 +364,10 @@ export default function ROICalculator() {
         {/* Header Section */}
       <div className="max-w-4xl mx-auto mb-8">
         <div className="text-center mb-8">
-          <Building2 className="h-16 w-16 text-conduit-orange mx-auto mb-4" />
           <h1 className="text-3xl font-bold text-gray-900 mb-2">Hospital Transfer Center</h1>
-          <h2 className="text-xl font-semibold text-conduit-orange mb-2">ROI Calculator</h2>
-          <p className="text-conduit-gray text-lg">Calculate return on investment for your transfer center operations</p>
+          <h2 className="text-xl font-semibold text-conduit-orange mb-4">ROI Calculator</h2>
+          <p className="text-conduit-gray text-lg mb-3">This ROI calculator determines how much you can save when you trust Conduit with your transfer center needs.</p>
+          <p className="text-gray-600">Enter your hospital's staffed bed count below to see your potential return on investment from partnering with our expert transfer center team.</p>
         </div>
       </div>
 
