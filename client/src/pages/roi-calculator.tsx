@@ -195,7 +195,7 @@ export default function ROICalculator() {
                       <span className="text-gray-700">
                         Total Annual Investment = {formatNumber(results.totalAnnualTransfers)} × $200
                       </span>
-                      <span className="text-xl font-semibold text-red-600">
+                      <span className="text-xl font-semibold text-gray-700">
                         {formatCurrency(results.totalAnnualInvestmentCost)}
                       </span>
                     </div>
