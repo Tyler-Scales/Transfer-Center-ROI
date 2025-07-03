@@ -13,7 +13,7 @@ import conduitCoverImage from "@assets/conduit_health_partners_cover_17515498382
 import conduitStatsImage from "@assets/conduit-success.png";
 
 // Calculation constants
-const VARIABLE_COST_PER_TRANSFER = 200;
+const VARIABLE_COST_PER_TRANSFER = 225;
 const NET_REVENUE_PER_ADMISSION = 10000;
 const ANNUAL_OPERATIONAL_COST_SAVINGS = 2000000;
 const LEAKAGE_RATE = 0.20;
