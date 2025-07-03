@@ -80,8 +80,9 @@ Comprehensive component library based on shadcn/ui including:
 
 ### Healthcare-Specific Features
 - ROI calculation constants tailored for hospital operations
-- Professional healthcare color scheme
+- Conduit Health Partners branded color scheme (orange and teal)
 - Mobile-responsive design for clinical environments
+- Integrated company logo and professional healthcare styling
 
 ## Deployment Strategy
 
@@ -107,7 +108,8 @@ Comprehensive component library based on shadcn/ui including:
 
 ```
 Changelog:
-- July 03, 2025. Initial setup
+- July 03, 2025. Initial setup with hospital transfer center ROI calculator
+- July 03, 2025. Updated branding to Conduit Health Partners with orange/teal color scheme and logo integration
 ```
 
 ## User Preferences

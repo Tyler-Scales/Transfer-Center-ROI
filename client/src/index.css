@@ -1,8 +1,8 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
 :root {
   --background: hsl(0, 0%, 100%);
@@ -15,21 +15,21 @@
   --card-foreground: hsl(20, 14.3%, 4.1%);
   --border: hsl(20, 5.9%, 90%);
   --input: hsl(20, 5.9%, 90%);
-  --primary: hsl(207, 90%, 54%);
-  --primary-foreground: hsl(211, 100%, 99%);
+  --primary: hsl(18, 100%, 50%);
+  --primary-foreground: hsl(0, 0%, 100%);
   --secondary: hsl(60, 4.8%, 95.9%);
   --secondary-foreground: hsl(24, 9.8%, 10%);
   --accent: hsl(60, 4.8%, 95.9%);
   --accent-foreground: hsl(24, 9.8%, 10%);
   --destructive: hsl(0, 84.2%, 60.2%);
   --destructive-foreground: hsl(60, 9.1%, 97.8%);
-  --ring: hsl(20, 14.3%, 4.1%);
+  --ring: hsl(18, 100%, 50%);
   --radius: 0.5rem;
   
-  /* Healthcare-specific colors */
-  --healthcare-blue: hsl(207, 100%, 40%);
-  --healthcare-teal: hsl(180, 100%, 32%);
-  --healthcare-gray: hsl(215, 16%, 47%);
+  /* Conduit brand colors */
+  --conduit-orange: hsl(18, 100%, 50%);
+  --conduit-teal: hsl(180, 65%, 35%);
+  --conduit-gray: hsl(215, 16%, 47%);
 }
 
 .dark {
@@ -43,8 +43,8 @@
   --card-foreground: hsl(0, 0%, 98%);
   --border: hsl(240, 3.7%, 15.9%);
   --input: hsl(240, 3.7%, 15.9%);
-  --primary: hsl(207, 90%, 54%);
-  --primary-foreground: hsl(211, 100%, 99%);
+  --primary: hsl(18, 100%, 60%);
+  --primary-foreground: hsl(0, 0%, 100%);
   --secondary: hsl(240, 3.7%, 15.9%);
   --secondary-foreground: hsl(0, 0%, 98%);
   --accent: hsl(240, 3.7%, 15.9%);
@@ -54,10 +54,10 @@
   --ring: hsl(240, 4.9%, 83.9%);
   --radius: 0.5rem;
   
-  /* Healthcare-specific colors for dark mode */
-  --healthcare-blue: hsl(207, 90%, 54%);
-  --healthcare-teal: hsl(180, 100%, 42%);
-  --healthcare-gray: hsl(215, 16%, 67%);
+  /* Conduit brand colors for dark mode */
+  --conduit-orange: hsl(18, 100%, 60%);
+  --conduit-teal: hsl(180, 65%, 45%);
+  --conduit-gray: hsl(215, 16%, 67%);
 }
 
 @layer base {
@@ -76,31 +76,31 @@
     font-family: 'Inter', sans-serif;
   }
   
-  .text-healthcare-blue {
-    color: var(--healthcare-blue);
+  .text-conduit-orange {
+    color: var(--conduit-orange);
   }
   
-  .text-healthcare-teal {
-    color: var(--healthcare-teal);
+  .text-conduit-teal {
+    color: var(--conduit-teal);
   }
   
-  .text-healthcare-gray {
-    color: var(--healthcare-gray);
+  .text-conduit-gray {
+    color: var(--conduit-gray);
   }
   
-  .bg-healthcare-blue {
-    background-color: var(--healthcare-blue);
+  .bg-conduit-orange {
+    background-color: var(--conduit-orange);
   }
   
-  .bg-healthcare-teal {
-    background-color: var(--healthcare-teal);
+  .bg-conduit-teal {
+    background-color: var(--conduit-teal);
   }
   
-  .border-healthcare-blue {
-    border-color: var(--healthcare-blue);
+  .border-conduit-orange {
+    border-color: var(--conduit-orange);
   }
   
-  .ring-healthcare-blue {
-    --tw-ring-color: var(--healthcare-blue);
+  .ring-conduit-orange {
+    --tw-ring-color: var(--conduit-orange);
   }
 }

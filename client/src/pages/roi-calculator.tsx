@@ -3,6 +3,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Building2, Settings, Calculator, TrendingUp, BarChart3 } from "lucide-react";
+import ConduitLogo from "@assets/ConduitLogo_Color_1751505244592.png";
 
 // Calculation constants
 const VARIABLE_COST_PER_TRANSFER = 200;
@@ -94,10 +95,14 @@ export default function ROICalculator() {
       {/* Header Section */}
       <div className="max-w-4xl mx-auto mb-8">
         <div className="text-center mb-8">
-          <Building2 className="h-16 w-16 text-healthcare-blue mx-auto mb-4" />
+          <img 
+            src={ConduitLogo} 
+            alt="Conduit Health Partners" 
+            className="h-16 mx-auto mb-6"
+          />
           <h1 className="text-3xl font-bold text-gray-900 mb-2">Hospital Transfer Center</h1>
-          <h2 className="text-xl font-semibold text-healthcare-blue mb-2">ROI Calculator</h2>
-          <p className="text-healthcare-gray text-lg">Calculate return on investment for your transfer center operations</p>
+          <h2 className="text-xl font-semibold text-conduit-orange mb-2">ROI Calculator</h2>
+          <p className="text-conduit-gray text-lg">Calculate return on investment for your transfer center operations</p>
         </div>
       </div>
 
@@ -106,7 +111,7 @@ export default function ROICalculator() {
         <Card className="mb-8 shadow-lg">
           <CardContent className="p-6">
             <div className="flex items-center mb-4">
-              <Building2 className="h-5 w-5 text-healthcare-blue mr-3" />
+              <Building2 className="h-5 w-5 text-conduit-orange mr-3" />
               <h3 className="text-xl font-semibold text-gray-900">Input Parameters</h3>
             </div>
             
@@ -121,7 +126,7 @@ export default function ROICalculator() {
                 placeholder="Enter number of staffed beds"
                 value={staffedBeds}
                 onChange={(e) => handleInputChange(e.target.value)}
-                className="text-lg py-3 focus:ring-2 focus:ring-healthcare-blue focus:border-healthcare-blue"
+                className="text-lg py-3 focus:ring-2 focus:ring-conduit-orange focus:border-conduit-orange"
               />
               <p className="text-sm text-gray-500 mt-2">Enter the total number of staffed beds in your facility</p>
             </div>
@@ -132,7 +137,7 @@ export default function ROICalculator() {
         <Card className="mb-8 shadow-lg">
           <CardContent className="p-6">
             <div className="flex items-center mb-4">
-              <Settings className="h-5 w-5 text-healthcare-blue mr-3" />
+              <Settings className="h-5 w-5 text-conduit-orange mr-3" />
               <h3 className="text-xl font-semibold text-gray-900">Calculation Assumptions</h3>
             </div>
             
@@ -165,7 +170,7 @@ export default function ROICalculator() {
             <Card className="mb-8 shadow-lg">
               <CardContent className="p-6">
                 <div className="flex items-center mb-6">
-                  <Calculator className="h-5 w-5 text-healthcare-blue mr-3" />
+                  <Calculator className="h-5 w-5 text-conduit-orange mr-3" />
                   <h3 className="text-xl font-semibold text-gray-900">Calculation Steps</h3>
                 </div>
                 
@@ -177,7 +182,7 @@ export default function ROICalculator() {
                       <span className="text-gray-700">
                         Total Annual Transfers = {formatNumber(parseInt(staffedBeds))} × 12
                       </span>
-                      <span className="text-xl font-semibold text-healthcare-blue">
+                      <span className="text-xl font-semibold text-conduit-orange">
                         {formatNumber(results.totalAnnualTransfers)}
                       </span>
                     </div>
@@ -243,7 +248,7 @@ export default function ROICalculator() {
             </Card>
 
             {/* Final ROI Result */}
-            <div className="bg-gradient-to-r from-[#0066CC] to-[#00A3A3] rounded-lg shadow-lg p-8 text-white text-center">
+            <div className="bg-gradient-to-r from-conduit-orange to-conduit-teal rounded-lg shadow-lg p-8 text-white text-center">
               <div className="flex items-center justify-center mb-4">
                 <TrendingUp className="h-8 w-8 mr-3" />
                 <h3 className="text-2xl font-bold">Return on Investment</h3>
