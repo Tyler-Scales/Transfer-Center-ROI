@@ -3,7 +3,6 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Building2, Settings, Calculator, TrendingUp, BarChart3 } from "lucide-react";
-import ConduitLogo from "@assets/ConduitLogo_Color_1751505244592.png";
 
 // Calculation constants
 const VARIABLE_COST_PER_TRANSFER = 200;
@@ -95,11 +94,7 @@ export default function ROICalculator() {
       {/* Header Section */}
       <div className="max-w-4xl mx-auto mb-8">
         <div className="text-center mb-8">
-          <img 
-            src={ConduitLogo} 
-            alt="Conduit Health Partners" 
-            className="h-16 mx-auto mb-6"
-          />
+          <Building2 className="h-16 w-16 text-conduit-orange mx-auto mb-4" />
           <h1 className="text-3xl font-bold text-gray-900 mb-2">Hospital Transfer Center</h1>
           <h2 className="text-xl font-semibold text-conduit-orange mb-2">ROI Calculator</h2>
           <p className="text-conduit-gray text-lg">Calculate return on investment for your transfer center operations</p>
