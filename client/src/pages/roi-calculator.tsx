@@ -466,34 +466,35 @@ export default function ROICalculator() {
                     This represents a highly favorable investment opportunity for your hospital.
                   </p>
                 </div>
+              </div>
                 
-                {/* Email Section */}
-                <div className="flex flex-col md:flex-row items-start md:items-center gap-6 justify-between">
-                  <div className="flex-1">
-                    <p className="text-gray-700 text-lg mb-4">
-                      Email this analysis to yourself so you can reference it later and share with your team.
-                    </p>
-                    
-                    <div className="flex items-start space-x-3">
-                      <Checkbox
-                        id="teamContact"
-                        checked={wantsTeamContact}
-                        onCheckedChange={(checked) => setWantsTeamContact(checked as boolean)}
-                        className="mt-1"
-                      />
-                      <label htmlFor="teamContact" className="text-sm text-gray-600 leading-relaxed cursor-pointer">
-                        Check if you'd like to hear from our team about how we can make this ROI a reality at your hospital
-                      </label>
-                    </div>
-                  </div>
+              {/* Email Section */}
+              <div className="flex flex-col md:flex-row items-start md:items-center gap-6 justify-between">
+                <div className="flex-1">
+                  <p className="text-gray-700 text-lg mb-4">
+                    Email this analysis to yourself so you can reference it later and share with your team.
+                  </p>
                   
-                  <Dialog open={isEmailDialogOpen} onOpenChange={setIsEmailDialogOpen}>
-                    <DialogTrigger asChild>
-                      <Button className="bg-orange-500 hover:bg-orange-600 text-white px-8 py-3 rounded-lg font-semibold flex items-center gap-2 whitespace-nowrap">
-                        <Mail className="h-5 w-5" />
-                        Email Results
-                      </Button>
-                    </DialogTrigger>
+                  <div className="flex items-start space-x-3">
+                    <Checkbox
+                      id="teamContact"
+                      checked={wantsTeamContact}
+                      onCheckedChange={(checked) => setWantsTeamContact(checked as boolean)}
+                      className="mt-1"
+                    />
+                    <label htmlFor="teamContact" className="text-sm text-gray-600 leading-relaxed cursor-pointer">
+                      Check if you'd like to hear from our team about how we can make this ROI a reality at your hospital
+                    </label>
+                  </div>
+                </div>
+                
+                <Dialog open={isEmailDialogOpen} onOpenChange={setIsEmailDialogOpen}>
+                  <DialogTrigger asChild>
+                    <Button className="bg-orange-500 hover:bg-orange-600 text-white px-8 py-3 rounded-lg font-semibold flex items-center gap-2 whitespace-nowrap">
+                      <Mail className="h-5 w-5" />
+                      Email Results
+                    </Button>
+                  </DialogTrigger>
                   <DialogContent className="sm:max-w-md">
                     <DialogHeader>
                       <DialogTitle className="flex items-center gap-2">
@@ -542,8 +543,6 @@ export default function ROICalculator() {
                     </div>
                   </DialogContent>
                 </Dialog>
-                </div>
-              </div>
               </div>
             </CardContent>
           </Card>
