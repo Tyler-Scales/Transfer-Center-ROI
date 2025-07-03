@@ -10,7 +10,7 @@ import { useMutation } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 import conduitCoverImage from "@assets/conduit_health_partners_cover_1751549838249.jpg";
-import conduitStatsImage from "@assets/conduit-stats.png";
+import conduitStatsImage from "@assets/conduit-success.png";
 
 // Calculation constants
 const VARIABLE_COST_PER_TRANSFER = 200;
