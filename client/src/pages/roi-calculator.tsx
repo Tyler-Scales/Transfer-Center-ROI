@@ -10,6 +10,7 @@ import { useMutation } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 import conduitCoverImage from "@assets/conduit_health_partners_cover_1751549838249.jpg";
+import conduitStatsImage from "@assets/Screenshot 2025-07-03 at 10.39.10 AM_1751553714060.png";
 
 // Calculation constants
 const VARIABLE_COST_PER_TRANSFER = 200;
@@ -676,7 +677,7 @@ export default function ROICalculator() {
 
                 <div className="mb-6">
                   <img 
-                    src="/attached_assets/Screenshot 2025-07-03 at 10.39.10 AM_1751553714060.png" 
+                    src={conduitStatsImage} 
                     alt="Conduit Proven Success - Statistics showing 400+ Facilities and Locations Served, 523K+ Transfer Center Cases Managed, 821K+ Nurse Triage Cases Managed, 11.7M+ Total Calls Managed (All Services 2017-present)" 
                     className="w-full rounded-lg shadow-md"
                   />
