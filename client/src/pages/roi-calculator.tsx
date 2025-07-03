@@ -166,13 +166,13 @@ export default function ROICalculator() {
               <CardContent className="p-6">
                 <div className="flex items-center mb-6">
                   <Calculator className="h-5 w-5 text-conduit-orange mr-3" />
-                  <h3 className="text-xl font-semibold text-gray-900">Calculation Steps</h3>
+                  <h3 className="text-xl font-semibold text-gray-900">Calculations</h3>
                 </div>
                 
                 <div className="space-y-6">
-                  {/* Step 1 */}
+                  {/* Annual Transfer Volume */}
                   <div className="bg-gray-50 rounded-lg p-4">
-                    <h4 className="text-lg font-medium text-gray-900 mb-3">Step 1: Annual Transfer Volume</h4>
+                    <h4 className="text-lg font-medium text-gray-900 mb-3">Annual Transfer Volume</h4>
                     <div className="flex justify-between items-center">
                       <span className="text-gray-700">
                         Total Annual Transfers = {formatNumber(parseInt(staffedBeds))} × 12
@@ -183,9 +183,9 @@ export default function ROICalculator() {
                     </div>
                   </div>
 
-                  {/* Step 2 */}
+                  {/* Investment Cost */}
                   <div className="bg-gray-50 rounded-lg p-4">
-                    <h4 className="text-lg font-medium text-gray-900 mb-3">Step 2: Investment Cost</h4>
+                    <h4 className="text-lg font-medium text-gray-900 mb-3">Investment Cost</h4>
                     <div className="flex justify-between items-center">
                       <span className="text-gray-700">
                         Total Annual Investment = {formatNumber(results.totalAnnualTransfers)} × $200
@@ -196,9 +196,9 @@ export default function ROICalculator() {
                     </div>
                   </div>
 
-                  {/* Step 3 */}
+                  {/* Revenue Calculations */}
                   <div className="bg-gray-50 rounded-lg p-4">
-                    <h4 className="text-lg font-medium text-gray-900 mb-3">Step 3: Revenue Calculations</h4>
+                    <h4 className="text-lg font-medium text-gray-900 mb-3">Revenue Calculations</h4>
                     <div className="space-y-2">
                       <div className="flex justify-between">
                         <span className="text-gray-700">Recaptured Leakage Revenue:</span>
@@ -226,9 +226,9 @@ export default function ROICalculator() {
                     </div>
                   </div>
 
-                  {/* Step 4 */}
+                  {/* Net Benefit */}
                   <div className="bg-gray-50 rounded-lg p-4">
-                    <h4 className="text-lg font-medium text-gray-900 mb-3">Step 4: Net Benefit</h4>
+                    <h4 className="text-lg font-medium text-gray-900 mb-3">Net Benefit</h4>
                     <div className="flex justify-between items-center">
                       <span className="text-gray-700">
                         Net Annual Financial Benefit = {formatCurrency(results.totalGrossFinancialBenefit)} - {formatCurrency(results.totalAnnualInvestmentCost)}
