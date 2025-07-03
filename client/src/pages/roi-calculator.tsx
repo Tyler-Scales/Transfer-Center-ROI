@@ -1,9 +1,8 @@
 import { useState, useCallback } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Building2, Settings, Calculator, TrendingUp, BarChart3, PieChart, Activity } from "lucide-react";
-import { PieChart as RechartsPieChart, Cell, ResponsiveContainer, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
+import { Building2, Settings, Calculator, TrendingUp, BarChart3 } from "lucide-react";
 
 // Calculation constants
 const VARIABLE_COST_PER_TRANSFER = 200;
@@ -40,14 +39,7 @@ export default function ROICalculator() {
     return new Intl.NumberFormat('en-US').format(number);
   };
 
-  const formatCompactCurrency = (amount: number): string => {
-    return new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: 'USD',
-      notation: 'compact',
-      maximumFractionDigits: 1
-    }).format(amount);
-  };
+
 
   const calculateROI = useCallback((beds: number): CalculationResults => {
     // Step 1: Total Annual Transfers
@@ -280,163 +272,7 @@ export default function ROICalculator() {
               </CardContent>
             </Card>
 
-            {/* Revenue Breakdown Chart */}
-            <Card className="mb-8 shadow-lg">
-              <CardHeader>
-                <div className="flex items-center">
-                  <PieChart className="h-5 w-5 text-orange-500 mr-3" />
-                  <CardTitle>Revenue Source Breakdown</CardTitle>
-                </div>
-              </CardHeader>
-              <CardContent>
-                <div className="grid md:grid-cols-2 gap-6">
-                  <div>
-                    <ResponsiveContainer width="100%" height={300}>
-                      <RechartsPieChart>
-                        <PieChart 
-                          data={[
-                            { name: 'Operational Cost Savings', value: ANNUAL_OPERATIONAL_COST_SAVINGS, color: '#10B981' },
-                            { name: 'Recaptured Leakage Revenue', value: results.recapturedLeakageRevenue, color: '#F59E0B' },
-                            { name: 'New Growth Revenue', value: results.newGrowthRevenue, color: '#3B82F6' }
-                          ]}
-                          cx="50%"
-                          cy="50%"
-                          innerRadius={60}
-                          outerRadius={120}
-                          paddingAngle={5}
-                          dataKey="value"
-                        >
-                          {[
-                            { name: 'Operational Cost Savings', value: ANNUAL_OPERATIONAL_COST_SAVINGS, color: '#10B981' },
-                            { name: 'Recaptured Leakage Revenue', value: results.recapturedLeakageRevenue, color: '#F59E0B' },
-                            { name: 'New Growth Revenue', value: results.newGrowthRevenue, color: '#3B82F6' }
-                          ].map((entry, index) => (
-                            <Cell key={`cell-${index}`} fill={entry.color} />
-                          ))}
-                        </PieChart>
-                        <Tooltip formatter={(value: number) => formatCompactCurrency(value)} />
-                      </RechartsPieChart>
-                    </ResponsiveContainer>
-                  </div>
-                  <div className="space-y-4">
-                    <div className="flex items-center justify-between p-4 bg-green-50 rounded-lg">
-                      <div className="flex items-center">
-                        <div className="w-4 h-4 bg-green-500 rounded mr-3"></div>
-                        <span className="text-sm font-medium">Operational Cost Savings</span>
-                      </div>
-                      <span className="font-bold text-green-600">{formatCurrency(ANNUAL_OPERATIONAL_COST_SAVINGS)}</span>
-                    </div>
-                    <div className="flex items-center justify-between p-4 bg-amber-50 rounded-lg">
-                      <div className="flex items-center">
-                        <div className="w-4 h-4 bg-amber-500 rounded mr-3"></div>
-                        <span className="text-sm font-medium">Recaptured Leakage Revenue</span>
-                      </div>
-                      <span className="font-bold text-amber-600">{formatCurrency(results.recapturedLeakageRevenue)}</span>
-                    </div>
-                    <div className="flex items-center justify-between p-4 bg-blue-50 rounded-lg">
-                      <div className="flex items-center">
-                        <div className="w-4 h-4 bg-blue-500 rounded mr-3"></div>
-                        <span className="text-sm font-medium">New Growth Revenue</span>
-                      </div>
-                      <span className="font-bold text-blue-600">{formatCurrency(results.newGrowthRevenue)}</span>
-                    </div>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
 
-            {/* Sensitivity Analysis */}
-            <Card className="mb-8 shadow-lg">
-              <CardHeader>
-                <div className="flex items-center">
-                  <Activity className="h-5 w-5 text-orange-500 mr-3" />
-                  <CardTitle>Sensitivity Analysis - ROI by Bed Count</CardTitle>
-                </div>
-              </CardHeader>
-              <CardContent>
-                <ResponsiveContainer width="100%" height={400}>
-                  <BarChart
-                    data={[
-                      { beds: 50, roi: calculateROI(50).finalROI.toFixed(1) },
-                      { beds: 100, roi: calculateROI(100).finalROI.toFixed(1) },
-                      { beds: 200, roi: calculateROI(200).finalROI.toFixed(1) },
-                      { beds: 300, roi: calculateROI(300).finalROI.toFixed(1) },
-                      { beds: 500, roi: calculateROI(500).finalROI.toFixed(1) },
-                      { beds: 750, roi: calculateROI(750).finalROI.toFixed(1) },
-                      { beds: 1000, roi: calculateROI(1000).finalROI.toFixed(1) }
-                    ]}
-                    margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
-                  >
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="beds" />
-                    <YAxis label={{ value: 'ROI Ratio', angle: -90, position: 'insideLeft' }} />
-                    <Tooltip formatter={(value: string) => [`${value}:1`, 'ROI Ratio']} />
-                    <Bar dataKey="roi" fill="#F97316" />
-                  </BarChart>
-                </ResponsiveContainer>
-              </CardContent>
-            </Card>
-
-            {/* Industry Benchmarking */}
-            <Card className="mb-8 shadow-lg">
-              <CardHeader>
-                <div className="flex items-center">
-                  <BarChart3 className="h-5 w-5 text-orange-500 mr-3" />
-                  <CardTitle>Industry Benchmarking</CardTitle>
-                </div>
-              </CardHeader>
-              <CardContent>
-                <div className="grid md:grid-cols-2 gap-6">
-                  <div className="space-y-4">
-                    <h4 className="text-lg font-semibold text-gray-900">Your ROI Performance</h4>
-                    <div className="space-y-3">
-                      <div className="flex justify-between items-center p-3 bg-orange-50 rounded-lg border-l-4 border-orange-500">
-                        <span className="font-medium">Your ROI Ratio</span>
-                        <span className="text-xl font-bold text-orange-600">{results.finalROI.toFixed(1)}:1</span>
-                      </div>
-                      <div className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
-                        <span className="text-gray-600">Industry Average</span>
-                        <span className="text-lg font-semibold text-gray-700">3.5:1</span>
-                      </div>
-                      <div className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
-                        <span className="text-gray-600">Top Quartile</span>
-                        <span className="text-lg font-semibold text-gray-700">6.0:1</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="space-y-4">
-                    <h4 className="text-lg font-semibold text-gray-900">Performance Rating</h4>
-                    <div className="space-y-3">
-                      {results.finalROI >= 6.0 ? (
-                        <div className="p-4 bg-green-100 border border-green-300 rounded-lg">
-                          <div className="flex items-center">
-                            <TrendingUp className="h-5 w-5 text-green-600 mr-2" />
-                            <span className="font-semibold text-green-800">Exceptional Performance</span>
-                          </div>
-                          <p className="text-sm text-green-700 mt-1">Your ROI is in the top quartile of healthcare transfer centers.</p>
-                        </div>
-                      ) : results.finalROI >= 3.5 ? (
-                        <div className="p-4 bg-blue-100 border border-blue-300 rounded-lg">
-                          <div className="flex items-center">
-                            <TrendingUp className="h-5 w-5 text-blue-600 mr-2" />
-                            <span className="font-semibold text-blue-800">Above Average</span>
-                          </div>
-                          <p className="text-sm text-blue-700 mt-1">Your ROI exceeds the industry average by {((results.finalROI / 3.5 - 1) * 100).toFixed(0)}%.</p>
-                        </div>
-                      ) : (
-                        <div className="p-4 bg-amber-100 border border-amber-300 rounded-lg">
-                          <div className="flex items-center">
-                            <Activity className="h-5 w-5 text-amber-600 mr-2" />
-                            <span className="font-semibold text-amber-800">Below Average</span>
-                          </div>
-                          <p className="text-sm text-amber-700 mt-1">Consider optimization strategies to improve ROI performance.</p>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
           </>
         ) : (
           /* Empty State */
