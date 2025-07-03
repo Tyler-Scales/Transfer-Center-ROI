@@ -662,8 +662,33 @@ export default function ROICalculator() {
               </CardContent>
             </Card>
 
+            {/* About Conduit Section */}
+            <Card className="mb-8 shadow-lg">
+              <CardContent className="p-6">
+                <div className="flex items-center mb-6">
+                  <Building2 className="h-5 w-5 text-conduit-orange mr-3" />
+                  <h3 className="text-xl font-semibold text-gray-900">About Conduit</h3>
+                </div>
+                
+                <p className="text-gray-700 text-lg mb-6 leading-relaxed">
+                  We are a nurse-led organization that partners with health care organizations to connect patients with the right care at the right time. Our solutions improve access, optimize resources, and support growth across <span className="font-bold text-conduit-orange">health systems</span>, <span className="font-bold text-conduit-orange">provider groups</span>, and <span className="font-bold text-conduit-orange">health plans</span>.
+                </p>
 
+                <div className="mb-6">
+                  <img 
+                    src="/attached_assets/Screenshot 2025-07-03 at 10.39.10 AM_1751553714060.png" 
+                    alt="Conduit Proven Success - Statistics showing 400+ Facilities and Locations Served, 523K+ Transfer Center Cases Managed, 821K+ Nurse Triage Cases Managed, 11.7M+ Total Calls Managed (All Services 2017-present)" 
+                    className="w-full rounded-lg shadow-md"
+                  />
+                </div>
 
+                <div className="text-center">
+                  <Button className="bg-conduit-orange hover:bg-orange-600 text-white px-8 py-3 rounded-lg font-semibold text-lg">
+                    Contact Conduit Today
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
 
           </>
         ) : !isCalculating ? (
