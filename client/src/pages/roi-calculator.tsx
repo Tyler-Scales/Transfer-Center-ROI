@@ -31,9 +31,11 @@ export default function ROICalculator() {
   const [staffedBeds, setStaffedBeds] = useState<string>("");
   const [results, setResults] = useState<CalculationResults | null>(null);
   const [emailTo, setEmailTo] = useState<string>("");
-  const [emailFrom, setEmailFrom] = useState<string>("");
   const [isEmailDialogOpen, setIsEmailDialogOpen] = useState<boolean>(false);
   const { toast } = useToast();
+  
+  // Fixed sender email address
+  const fromEmail = "roi-calculator@conduithealth.com";
 
   const formatCurrency = (amount: number): string => {
     return new Intl.NumberFormat('en-US', {
@@ -49,8 +51,8 @@ export default function ROICalculator() {
   };
 
   const emailMutation = useMutation({
-    mutationFn: async ({ to, from, subject, html }: { to: string; from: string; subject: string; html: string }) => {
-      return apiRequest('POST', '/api/send-email', { to, from, subject, html });
+    mutationFn: async ({ to, subject, html }: { to: string; subject: string; html: string }) => {
+      return apiRequest('POST', '/api/send-email', { to, from: fromEmail, subject, html });
     },
     onSuccess: () => {
       toast({
@@ -59,7 +61,6 @@ export default function ROICalculator() {
       });
       setIsEmailDialogOpen(false);
       setEmailTo("");
-      setEmailFrom("");
     },
     onError: () => {
       toast({
@@ -133,12 +134,12 @@ export default function ROICalculator() {
   };
 
   const handleSendEmail = () => {
-    if (!results || !emailTo || !emailFrom) return;
+    if (!results || !emailTo) return;
     
     const subject = `Transfer Center ROI Analysis - ${results.finalROI.toFixed(1)}:1 ROI`;
     const html = generateEmailHTML(results, parseInt(staffedBeds));
     
-    emailMutation.mutate({ to: emailTo, from: emailFrom, subject, html });
+    emailMutation.mutate({ to: emailTo, subject, html });
   };
 
 
@@ -387,18 +388,13 @@ export default function ROICalculator() {
                         </DialogTitle>
                       </DialogHeader>
                       <div className="space-y-4">
-                        <div>
-                          <Label htmlFor="emailFrom">From Email Address</Label>
-                          <Input
-                            id="emailFrom"
-                            type="email"
-                            placeholder="your.email@hospital.com"
-                            value={emailFrom}
-                            onChange={(e) => setEmailFrom(e.target.value)}
-                          />
+                        <div className="bg-gray-50 p-3 rounded-lg">
+                          <p className="text-sm text-gray-600">
+                            <strong>From:</strong> {fromEmail}
+                          </p>
                         </div>
                         <div>
-                          <Label htmlFor="emailTo">To Email Address</Label>
+                          <Label htmlFor="emailTo">Send to Email Address</Label>
                           <Input
                             id="emailTo"
                             type="email"
@@ -410,7 +406,7 @@ export default function ROICalculator() {
                         <div className="flex gap-2">
                           <Button
                             onClick={handleSendEmail}
-                            disabled={!emailTo || !emailFrom || emailMutation.isPending}
+                            disabled={!emailTo || emailMutation.isPending}
                             className="flex-1 bg-orange-500 hover:bg-orange-600"
                           >
                             {emailMutation.isPending ? (
