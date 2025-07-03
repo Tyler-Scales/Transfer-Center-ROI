@@ -9,6 +9,7 @@ import { Building2, Settings, Calculator, TrendingUp, BarChart3, Mail, Send } fr
 import { useMutation } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
+import conduitCoverImage from "@assets/conduit_health_partners_cover_1751549838249.jpg";
 
 // Calculation constants
 const VARIABLE_COST_PER_TRANSFER = 200;
@@ -349,8 +350,18 @@ export default function ROICalculator() {
   ];
 
   return (
-    <div className="min-h-screen py-8 px-4 bg-gray-50">
-      {/* Header Section */}
+    <div className="min-h-screen bg-gray-50">
+      {/* Conduit Health Partners Cover Image */}
+      <div className="w-full">
+        <img 
+          src={conduitCoverImage} 
+          alt="Conduit Health Partners" 
+          className="w-full h-32 md:h-48 object-cover"
+        />
+      </div>
+
+      <div className="py-8 px-4">
+        {/* Header Section */}
       <div className="max-w-4xl mx-auto mb-8">
         <div className="text-center mb-8">
           <Building2 className="h-16 w-16 text-conduit-orange mx-auto mb-4" />
@@ -666,6 +677,7 @@ export default function ROICalculator() {
             <p className="text-gray-400">Your ROI analysis will appear here</p>
           </div>
         ) : null}
+      </div>
       </div>
     </div>
   );
