@@ -328,6 +328,14 @@ export default function ROICalculator() {
     setHasCalculated(true);
   };
 
+  const handleReset = () => {
+    setStaffedBeds("");
+    setResults(null);
+    setHasCalculated(false);
+    setEmailTo("");
+    setIsEmailDialogOpen(false);
+  };
+
   const assumptions = [
     { label: "Variable Cost per Transfer:", value: "$200" },
     { label: "Net Revenue per Admission:", value: "$10,000" },
@@ -379,6 +387,14 @@ export default function ROICalculator() {
                   className="bg-orange-500 hover:bg-orange-600 text-white px-6 py-3 text-lg font-semibold"
                 >
                   {isCalculating ? "Calculating..." : "Calculate"}
+                </Button>
+                <Button
+                  onClick={handleReset}
+                  disabled={isCalculating}
+                  variant="outline"
+                  className="px-6 py-3 text-lg font-semibold border-gray-300 text-gray-600 hover:bg-gray-50"
+                >
+                  Reset
                 </Button>
               </div>
               <p className="text-sm text-gray-500 mt-2">Enter the total number of staffed beds in your facility</p>
