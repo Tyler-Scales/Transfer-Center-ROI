@@ -32,6 +32,8 @@ export default function ROICalculator() {
   const [results, setResults] = useState<CalculationResults | null>(null);
   const [emailTo, setEmailTo] = useState<string>("");
   const [isEmailDialogOpen, setIsEmailDialogOpen] = useState<boolean>(false);
+  const [isCalculating, setIsCalculating] = useState<boolean>(false);
+  const [hasCalculated, setHasCalculated] = useState<boolean>(false);
   const { toast } = useToast();
   
   // Fixed sender email address
@@ -297,14 +299,33 @@ export default function ROICalculator() {
 
   const handleInputChange = (value: string) => {
     setStaffedBeds(value);
-    
-    const beds = parseInt(value);
-    if (beds && beds > 0) {
-      const calculationResults = calculateROI(beds);
-      setResults(calculationResults);
-    } else {
+    // Reset results when input changes
+    if (hasCalculated) {
       setResults(null);
+      setHasCalculated(false);
     }
+  };
+
+  const handleCalculate = async () => {
+    const beds = parseInt(staffedBeds);
+    if (!beds || beds <= 0) {
+      toast({
+        title: "Invalid input",
+        description: "Please enter a valid number of staffed beds.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setIsCalculating(true);
+    
+    // Simulate calculation time with animation
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    
+    const calculationResults = calculateROI(beds);
+    setResults(calculationResults);
+    setIsCalculating(false);
+    setHasCalculated(true);
   };
 
   const assumptions = [
@@ -341,22 +362,57 @@ export default function ROICalculator() {
               <Label htmlFor="staffedBeds" className="text-sm font-medium text-gray-700 mb-2">
                 Number of Staffed Beds
               </Label>
-              <Input
-                id="staffedBeds"
-                type="number"
-                min="1"
-                placeholder="Enter number of staffed beds"
-                value={staffedBeds}
-                onChange={(e) => handleInputChange(e.target.value)}
-                className="text-lg py-3 focus:ring-2 focus:ring-conduit-orange focus:border-conduit-orange"
-              />
+              <div className="flex gap-3">
+                <Input
+                  id="staffedBeds"
+                  type="number"
+                  min="1"
+                  placeholder="Enter number of staffed beds"
+                  value={staffedBeds}
+                  onChange={(e) => handleInputChange(e.target.value)}
+                  className="text-lg py-3 focus:ring-2 focus:ring-conduit-orange focus:border-conduit-orange flex-1"
+                  disabled={isCalculating}
+                />
+                <Button
+                  onClick={handleCalculate}
+                  disabled={!staffedBeds || parseInt(staffedBeds) <= 0 || isCalculating}
+                  className="bg-orange-500 hover:bg-orange-600 text-white px-6 py-3 text-lg font-semibold"
+                >
+                  {isCalculating ? "Calculating..." : "Calculate"}
+                </Button>
+              </div>
               <p className="text-sm text-gray-500 mt-2">Enter the total number of staffed beds in your facility</p>
             </div>
           </CardContent>
         </Card>
 
+        {/* Loading Animation */}
+        {isCalculating && (
+          <Card className="mb-8 shadow-lg">
+            <CardContent className="p-12">
+              <div className="text-center">
+                <div className="relative inline-flex items-center justify-center">
+                  {/* Animated Ring */}
+                  <div className="w-24 h-24 border-4 border-gray-200 rounded-full"></div>
+                  <div className="absolute w-24 h-24 border-4 border-orange-500 border-t-transparent rounded-full animate-spin"></div>
+                  
+                  {/* Calculator Icon in Center */}
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <Calculator className="h-8 w-8 text-orange-500" />
+                  </div>
+                </div>
+                
+                <div className="mt-6">
+                  <h3 className="text-2xl font-bold text-gray-900 mb-2">Calculating ROI...</h3>
+                  <p className="text-gray-600">Analyzing your transfer center investment potential</p>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        )}
+
         {/* Final ROI Result */}
-        {results && (
+        {results && !isCalculating && (
           <Card className="mb-8 shadow-xl border-2 border-orange-500">
             <CardContent className="p-8">
               <div className="text-center">
@@ -443,8 +499,9 @@ export default function ROICalculator() {
         )}
 
         {/* Assumptions Section */}
-        <Card className="mb-8 shadow-lg">
-          <CardContent className="p-6">
+        {results && !isCalculating && (
+          <Card className="mb-8 shadow-lg">
+            <CardContent className="p-6">
             <div className="flex items-center mb-4">
               <Settings className="h-5 w-5 text-conduit-orange mr-3" />
               <h3 className="text-xl font-semibold text-gray-900">Calculation Assumptions</h3>
@@ -471,9 +528,10 @@ export default function ROICalculator() {
             </div>
           </CardContent>
         </Card>
+        )}
 
         {/* Results Section */}
-        {results ? (
+        {results && !isCalculating ? (
           <>
             {/* Calculation Steps */}
             <Card className="mb-8 shadow-lg">
@@ -560,14 +618,14 @@ export default function ROICalculator() {
 
 
           </>
-        ) : (
+        ) : !isCalculating ? (
           /* Empty State */
           <div className="text-center py-12">
             <BarChart3 className="h-24 w-24 text-gray-300 mx-auto mb-4" />
-            <h3 className="text-xl font-medium text-gray-500 mb-2">Enter staffed beds to calculate ROI</h3>
-            <p className="text-gray-400">Results will appear here automatically</p>
+            <h3 className="text-xl font-medium text-gray-500 mb-2">Enter staffed beds and click Calculate</h3>
+            <p className="text-gray-400">Your ROI analysis will appear here</p>
           </div>
-        )}
+        ) : null}
       </div>
     </div>
   );
