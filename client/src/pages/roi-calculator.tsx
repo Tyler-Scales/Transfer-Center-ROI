@@ -391,6 +391,11 @@ export default function ROICalculator() {
                   placeholder="Enter number of staffed beds"
                   value={staffedBeds}
                   onChange={(e) => handleInputChange(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' && staffedBeds && parseInt(staffedBeds) > 0 && !isCalculating) {
+                      handleCalculate();
+                    }
+                  }}
                   className="text-lg py-3 focus:ring-2 focus:ring-conduit-orange focus:border-conduit-orange flex-1"
                   disabled={isCalculating}
                 />
