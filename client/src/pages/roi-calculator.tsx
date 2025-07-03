@@ -363,7 +363,7 @@ export default function ROICalculator() {
           <CardContent className="p-6">
             <div className="flex items-center mb-4">
               <Building2 className="h-5 w-5 text-conduit-orange mr-3" />
-              <h3 className="text-xl font-semibold text-gray-900">Input Parameters</h3>
+              <h3 className="text-xl font-semibold text-gray-900">Share About Your Hospital</h3>
             </div>
             
             <div className="max-w-md">
