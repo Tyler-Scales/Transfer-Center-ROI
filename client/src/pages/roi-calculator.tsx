@@ -243,15 +243,15 @@ export default function ROICalculator() {
             </Card>
 
             {/* Final ROI Result */}
-            <Card className="shadow-xl border-2 border-conduit-orange">
+            <Card className="shadow-xl border-2 border-orange-500">
               <CardContent className="p-8">
                 <div className="text-center">
-                  <div className="inline-flex items-center justify-center w-16 h-16 bg-conduit-orange rounded-full mb-6">
+                  <div className="inline-flex items-center justify-center w-16 h-16 bg-orange-500 rounded-full mb-6">
                     <TrendingUp className="h-8 w-8 text-white" />
                   </div>
                   <h3 className="text-3xl font-bold text-gray-900 mb-6">Return on Investment</h3>
                   
-                  <div className="bg-gradient-to-r from-conduit-orange to-conduit-teal rounded-2xl p-8 mb-6">
+                  <div className="bg-gradient-to-r from-orange-500 to-teal-600 rounded-2xl p-8 mb-6">
                     <div className="text-7xl font-bold text-white mb-2">
                       {results.finalROI.toFixed(1)}%
                     </div>
