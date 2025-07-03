@@ -90,39 +90,28 @@ export default function ROICalculator() {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
+    <div className="min-h-screen py-8 px-4 bg-gray-50">
       {/* Header Section */}
-      <div className="bg-white shadow-sm border-b">
-        <div className="max-w-6xl mx-auto px-4 py-12">
-          <div className="text-center">
-            <div className="inline-flex items-center justify-center w-20 h-20 bg-conduit-orange/10 rounded-full mb-6">
-              <Building2 className="h-10 w-10 text-conduit-orange" />
-            </div>
-            <h1 className="text-4xl font-bold text-gray-900 mb-3">Hospital Transfer Center</h1>
-            <h2 className="text-2xl font-semibold text-conduit-orange mb-4">ROI Calculator</h2>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
-              Calculate return on investment for your transfer center operations with precision and clarity
-            </p>
-          </div>
+      <div className="max-w-4xl mx-auto mb-8">
+        <div className="text-center mb-8">
+          <Building2 className="h-16 w-16 text-conduit-orange mx-auto mb-4" />
+          <h1 className="text-3xl font-bold text-gray-900 mb-2">Hospital Transfer Center</h1>
+          <h2 className="text-xl font-semibold text-conduit-orange mb-2">ROI Calculator</h2>
+          <p className="text-conduit-gray text-lg">Calculate return on investment for your transfer center operations</p>
         </div>
       </div>
-      
-      <div className="max-w-6xl mx-auto px-4 py-12">
+
+      <div className="max-w-4xl mx-auto">
         {/* Input Section */}
-        <Card className="mb-8 shadow-lg border-0 bg-white/80 backdrop-blur-sm">
-          <CardContent className="p-8">
-            <div className="flex items-center mb-6">
-              <div className="w-12 h-12 bg-conduit-orange/10 rounded-lg flex items-center justify-center mr-4">
-                <Building2 className="h-6 w-6 text-conduit-orange" />
-              </div>
-              <div>
-                <h3 className="text-2xl font-bold text-gray-900">Input Parameters</h3>
-                <p className="text-gray-600">Enter your facility details below</p>
-              </div>
+        <Card className="mb-8 shadow-lg">
+          <CardContent className="p-6">
+            <div className="flex items-center mb-4">
+              <Building2 className="h-5 w-5 text-conduit-orange mr-3" />
+              <h3 className="text-xl font-semibold text-gray-900">Input Parameters</h3>
             </div>
             
             <div className="max-w-md">
-              <Label htmlFor="staffedBeds" className="text-base font-semibold text-gray-800 mb-3 block">
+              <Label htmlFor="staffedBeds" className="text-sm font-medium text-gray-700 mb-2">
                 Number of Staffed Beds
               </Label>
               <Input
@@ -132,41 +121,36 @@ export default function ROICalculator() {
                 placeholder="Enter number of staffed beds"
                 value={staffedBeds}
                 onChange={(e) => handleInputChange(e.target.value)}
-                className="text-xl py-4 px-4 border-2 border-gray-200 focus:ring-2 focus:ring-conduit-orange focus:border-conduit-orange transition-all duration-200"
+                className="text-lg py-3 focus:ring-2 focus:ring-conduit-orange focus:border-conduit-orange"
               />
-              <p className="text-sm text-gray-500 mt-3 leading-relaxed">Enter the total number of staffed beds in your facility to calculate ROI</p>
+              <p className="text-sm text-gray-500 mt-2">Enter the total number of staffed beds in your facility</p>
             </div>
           </CardContent>
         </Card>
 
         {/* Assumptions Section */}
-        <Card className="mb-8 shadow-lg border-0 bg-white/80 backdrop-blur-sm">
-          <CardContent className="p-8">
-            <div className="flex items-center mb-6">
-              <div className="w-12 h-12 bg-conduit-orange/10 rounded-lg flex items-center justify-center mr-4">
-                <Settings className="h-6 w-6 text-conduit-orange" />
-              </div>
-              <div>
-                <h3 className="text-2xl font-bold text-gray-900">Calculation Assumptions</h3>
-                <p className="text-gray-600">Industry-standard metrics used in our calculations</p>
-              </div>
+        <Card className="mb-8 shadow-lg">
+          <CardContent className="p-6">
+            <div className="flex items-center mb-4">
+              <Settings className="h-5 w-5 text-conduit-orange mr-3" />
+              <h3 className="text-xl font-semibold text-gray-900">Calculation Assumptions</h3>
             </div>
             
-            <div className="grid md:grid-cols-2 gap-8">
+            <div className="grid md:grid-cols-2 gap-6">
               <div className="space-y-4">
                 {assumptions.slice(0, 3).map((assumption, index) => (
-                  <div key={index} className="flex justify-between py-3 border-b border-gray-100">
-                    <span className="text-gray-700 font-medium">{assumption.label}</span>
-                    <span className="font-bold text-gray-900">{assumption.value}</span>
+                  <div key={index} className="flex justify-between py-2 border-b border-gray-100">
+                    <span className="text-gray-700">{assumption.label}</span>
+                    <span className="font-semibold text-gray-900">{assumption.value}</span>
                   </div>
                 ))}
               </div>
               
               <div className="space-y-4">
                 {assumptions.slice(3).map((assumption, index) => (
-                  <div key={index} className="flex justify-between py-3 border-b border-gray-100">
-                    <span className="text-gray-700 font-medium">{assumption.label}</span>
-                    <span className="font-bold text-gray-900">{assumption.value}</span>
+                  <div key={index} className="flex justify-between py-2 border-b border-gray-100">
+                    <span className="text-gray-700">{assumption.label}</span>
+                    <span className="font-semibold text-gray-900">{assumption.value}</span>
                   </div>
                 ))}
               </div>
@@ -178,69 +162,64 @@ export default function ROICalculator() {
         {results ? (
           <>
             {/* Calculation Steps */}
-            <Card className="mb-8 shadow-lg border-0 bg-white/80 backdrop-blur-sm">
-              <CardContent className="p-8">
-                <div className="flex items-center mb-8">
-                  <div className="w-12 h-12 bg-conduit-orange/10 rounded-lg flex items-center justify-center mr-4">
-                    <Calculator className="h-6 w-6 text-conduit-orange" />
-                  </div>
-                  <div>
-                    <h3 className="text-2xl font-bold text-gray-900">Calculation Steps</h3>
-                    <p className="text-gray-600">Detailed breakdown of your ROI calculation</p>
-                  </div>
+            <Card className="mb-8 shadow-lg">
+              <CardContent className="p-6">
+                <div className="flex items-center mb-6">
+                  <Calculator className="h-5 w-5 text-conduit-orange mr-3" />
+                  <h3 className="text-xl font-semibold text-gray-900">Calculation Steps</h3>
                 </div>
                 
                 <div className="space-y-6">
                   {/* Step 1 */}
-                  <div className="bg-gradient-to-r from-gray-50 to-gray-100 rounded-xl p-6">
-                    <h4 className="text-xl font-bold text-gray-900 mb-4">Step 1: Annual Transfer Volume</h4>
+                  <div className="bg-gray-50 rounded-lg p-4">
+                    <h4 className="text-lg font-medium text-gray-900 mb-3">Step 1: Annual Transfer Volume</h4>
                     <div className="flex justify-between items-center">
-                      <span className="text-gray-700 text-lg">
+                      <span className="text-gray-700">
                         Total Annual Transfers = {formatNumber(parseInt(staffedBeds))} × 12
                       </span>
-                      <span className="text-2xl font-bold text-conduit-orange">
+                      <span className="text-xl font-semibold text-conduit-orange">
                         {formatNumber(results.totalAnnualTransfers)}
                       </span>
                     </div>
                   </div>
 
                   {/* Step 2 */}
-                  <div className="bg-gradient-to-r from-gray-50 to-gray-100 rounded-xl p-6">
-                    <h4 className="text-xl font-bold text-gray-900 mb-4">Step 2: Investment Cost</h4>
+                  <div className="bg-gray-50 rounded-lg p-4">
+                    <h4 className="text-lg font-medium text-gray-900 mb-3">Step 2: Investment Cost</h4>
                     <div className="flex justify-between items-center">
-                      <span className="text-gray-700 text-lg">
+                      <span className="text-gray-700">
                         Total Annual Investment = {formatNumber(results.totalAnnualTransfers)} × $200
                       </span>
-                      <span className="text-2xl font-bold text-gray-700">
+                      <span className="text-xl font-semibold text-gray-700">
                         {formatCurrency(results.totalAnnualInvestmentCost)}
                       </span>
                     </div>
                   </div>
 
                   {/* Step 3 */}
-                  <div className="bg-gradient-to-r from-gray-50 to-gray-100 rounded-xl p-6">
-                    <h4 className="text-xl font-bold text-gray-900 mb-4">Step 3: Revenue Calculations</h4>
-                    <div className="space-y-4">
+                  <div className="bg-gray-50 rounded-lg p-4">
+                    <h4 className="text-lg font-medium text-gray-900 mb-3">Step 3: Revenue Calculations</h4>
+                    <div className="space-y-2">
                       <div className="flex justify-between">
-                        <span className="text-gray-700 text-lg">Recaptured Leakage Revenue:</span>
-                        <span className="font-bold text-green-600 text-lg">
+                        <span className="text-gray-700">Recaptured Leakage Revenue:</span>
+                        <span className="font-semibold text-green-600">
                           {formatCurrency(results.recapturedLeakageRevenue)}
                         </span>
                       </div>
                       <div className="flex justify-between">
-                        <span className="text-gray-700 text-lg">New Growth Revenue:</span>
-                        <span className="font-bold text-green-600 text-lg">
+                        <span className="text-gray-700">New Growth Revenue:</span>
+                        <span className="font-semibold text-green-600">
                           {formatCurrency(results.newGrowthRevenue)}
                         </span>
                       </div>
                       <div className="flex justify-between">
-                        <span className="text-gray-700 text-lg">Operational Cost Savings:</span>
-                        <span className="font-bold text-green-600 text-lg">$2,000,000</span>
+                        <span className="text-gray-700">Operational Cost Savings:</span>
+                        <span className="font-semibold text-green-600">$2,000,000</span>
                       </div>
-                      <hr className="my-4 border-gray-300" />
+                      <hr className="my-2" />
                       <div className="flex justify-between">
-                        <span className="text-gray-900 font-bold text-lg">Total Gross Financial Benefit:</span>
-                        <span className="text-2xl font-bold text-green-600">
+                        <span className="text-gray-900 font-medium">Total Gross Financial Benefit:</span>
+                        <span className="text-xl font-semibold text-green-600">
                           {formatCurrency(results.totalGrossFinancialBenefit)}
                         </span>
                       </div>
@@ -248,13 +227,13 @@ export default function ROICalculator() {
                   </div>
 
                   {/* Step 4 */}
-                  <div className="bg-gradient-to-r from-gray-50 to-gray-100 rounded-xl p-6">
-                    <h4 className="text-xl font-bold text-gray-900 mb-4">Step 4: Net Benefit</h4>
+                  <div className="bg-gray-50 rounded-lg p-4">
+                    <h4 className="text-lg font-medium text-gray-900 mb-3">Step 4: Net Benefit</h4>
                     <div className="flex justify-between items-center">
-                      <span className="text-gray-700 text-lg">
+                      <span className="text-gray-700">
                         Net Annual Financial Benefit = {formatCurrency(results.totalGrossFinancialBenefit)} - {formatCurrency(results.totalAnnualInvestmentCost)}
                       </span>
-                      <span className="text-2xl font-bold text-green-600">
+                      <span className="text-xl font-semibold text-green-600">
                         {formatCurrency(results.netAnnualFinancialBenefit)}
                       </span>
                     </div>
@@ -264,28 +243,26 @@ export default function ROICalculator() {
             </Card>
 
             {/* Final ROI Result */}
-            <div className="bg-gradient-to-r from-conduit-orange to-conduit-teal rounded-xl shadow-xl p-12 text-white text-center">
-              <div className="flex items-center justify-center mb-6">
-                <TrendingUp className="h-12 w-12 mr-4" />
-                <h3 className="text-3xl font-bold">Return on Investment</h3>
+            <div className="bg-gradient-to-r from-conduit-orange to-conduit-teal rounded-lg shadow-lg p-8 text-white text-center">
+              <div className="flex items-center justify-center mb-4">
+                <TrendingUp className="h-8 w-8 mr-3" />
+                <h3 className="text-2xl font-bold">Return on Investment</h3>
               </div>
-              <div className="text-7xl font-bold mb-6">
+              <div className="text-6xl font-bold mb-4">
                 {results.finalROI.toFixed(1)}%
               </div>
-              <p className="text-2xl opacity-90 mb-4">Annual ROI Percentage</p>
-              <div className="mt-8 text-xl opacity-80">
+              <p className="text-xl opacity-90">Annual ROI Percentage</p>
+              <div className="mt-6 text-lg opacity-80">
                 Based on {formatNumber(parseInt(staffedBeds))} staffed beds
               </div>
             </div>
           </>
         ) : (
           /* Empty State */
-          <div className="text-center py-20">
-            <div className="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-6">
-              <BarChart3 className="h-12 w-12 text-gray-400" />
-            </div>
-            <h3 className="text-2xl font-bold text-gray-600 mb-4">Enter staffed beds to calculate ROI</h3>
-            <p className="text-gray-500 text-lg">Results will appear here automatically as you type</p>
+          <div className="text-center py-12">
+            <BarChart3 className="h-24 w-24 text-gray-300 mx-auto mb-4" />
+            <h3 className="text-xl font-medium text-gray-500 mb-2">Enter staffed beds to calculate ROI</h3>
+            <p className="text-gray-400">Results will appear here automatically</p>
           </div>
         )}
       </div>
