@@ -233,6 +233,93 @@ export default function ROICalculator() {
           </CardContent>
         </Card>
 
+        {/* Final ROI Result */}
+        {results && (
+          <Card className="mb-8 shadow-xl border-2 border-orange-500">
+            <CardContent className="p-8">
+              <div className="text-center">
+                <div className="inline-flex items-center justify-center w-16 h-16 bg-orange-500 rounded-full mb-6">
+                  <TrendingUp className="h-8 w-8 text-white" />
+                </div>
+                <h3 className="text-3xl font-bold text-gray-900 mb-6">Return on Investment</h3>
+                
+                <div className="bg-gradient-to-r from-orange-500 to-teal-600 rounded-2xl p-8 mb-6">
+                  <div className="text-7xl font-bold text-white mb-2">
+                    {results.finalROI.toFixed(1)}:1
+                  </div>
+                  <p className="text-xl text-white opacity-90">ROI Ratio</p>
+                </div>
+                
+                <div className="bg-gray-50 rounded-lg p-6 mb-6">
+                  <p className="text-lg text-gray-700 leading-relaxed">
+                    An ROI ratio of <span className="font-bold text-orange-600">{results.finalROI.toFixed(1)}:1</span> means 
+                    that for every <span className="font-semibold">$1</span> invested in your transfer center operations, 
+                    you can expect to receive <span className="font-bold text-green-600">${results.finalROI.toFixed(1)}</span> in return. 
+                    This represents a highly favorable investment opportunity for your hospital.
+                  </p>
+                </div>
+                
+                {/* Email Button */}
+                <Dialog open={isEmailDialogOpen} onOpenChange={setIsEmailDialogOpen}>
+                  <DialogTrigger asChild>
+                    <Button className="bg-orange-500 hover:bg-orange-600 text-white px-8 py-3 rounded-lg font-semibold flex items-center gap-2">
+                      <Mail className="h-5 w-5" />
+                      Email Results
+                    </Button>
+                  </DialogTrigger>
+                  <DialogContent className="sm:max-w-md">
+                    <DialogHeader>
+                      <DialogTitle className="flex items-center gap-2">
+                        <Mail className="h-5 w-5 text-orange-500" />
+                        Email ROI Analysis
+                      </DialogTitle>
+                    </DialogHeader>
+                    <div className="space-y-4">
+                      <div className="bg-gray-50 p-3 rounded-lg">
+                        <p className="text-sm text-gray-600">
+                          <strong>From:</strong> {fromEmail}
+                        </p>
+                      </div>
+                      <div>
+                        <Label htmlFor="emailTo">Send to Email Address</Label>
+                        <Input
+                          id="emailTo"
+                          type="email"
+                          placeholder="recipient@hospital.com"
+                          value={emailTo}
+                          onChange={(e) => setEmailTo(e.target.value)}
+                        />
+                      </div>
+                      <div className="flex gap-2">
+                        <Button
+                          onClick={handleSendEmail}
+                          disabled={!emailTo || emailMutation.isPending}
+                          className="flex-1 bg-orange-500 hover:bg-orange-600"
+                        >
+                          {emailMutation.isPending ? (
+                            "Sending..."
+                          ) : (
+                            <>
+                              <Send className="h-4 w-4 mr-2" />
+                              Send Email
+                            </>
+                          )}
+                        </Button>
+                        <Button
+                          variant="outline"
+                          onClick={() => setIsEmailDialogOpen(false)}
+                        >
+                          Cancel
+                        </Button>
+                      </div>
+                    </div>
+                  </DialogContent>
+                </Dialog>
+              </div>
+            </CardContent>
+          </Card>
+        )}
+
         {/* Assumptions Section */}
         <Card className="mb-8 shadow-lg">
           <CardContent className="p-6">
@@ -347,90 +434,7 @@ export default function ROICalculator() {
               </CardContent>
             </Card>
 
-            {/* Final ROI Result */}
-            <Card className="shadow-xl border-2 border-orange-500">
-              <CardContent className="p-8">
-                <div className="text-center">
-                  <div className="inline-flex items-center justify-center w-16 h-16 bg-orange-500 rounded-full mb-6">
-                    <TrendingUp className="h-8 w-8 text-white" />
-                  </div>
-                  <h3 className="text-3xl font-bold text-gray-900 mb-6">Return on Investment</h3>
-                  
-                  <div className="bg-gradient-to-r from-orange-500 to-teal-600 rounded-2xl p-8 mb-6">
-                    <div className="text-7xl font-bold text-white mb-2">
-                      {results.finalROI.toFixed(1)}:1
-                    </div>
-                    <p className="text-xl text-white opacity-90">ROI Ratio</p>
-                  </div>
-                  
-                  <div className="bg-gray-50 rounded-lg p-6 mb-6">
-                    <p className="text-lg text-gray-700 leading-relaxed">
-                      An ROI ratio of <span className="font-bold text-orange-600">{results.finalROI.toFixed(1)}:1</span> means 
-                      that for every <span className="font-semibold">$1</span> invested in your transfer center operations, 
-                      you can expect to receive <span className="font-bold text-green-600">${results.finalROI.toFixed(1)}</span> in return. 
-                      This represents a highly favorable investment opportunity for your hospital.
-                    </p>
-                  </div>
-                  
-                  {/* Email Button */}
-                  <Dialog open={isEmailDialogOpen} onOpenChange={setIsEmailDialogOpen}>
-                    <DialogTrigger asChild>
-                      <Button className="bg-orange-500 hover:bg-orange-600 text-white px-8 py-3 rounded-lg font-semibold flex items-center gap-2">
-                        <Mail className="h-5 w-5" />
-                        Email Results
-                      </Button>
-                    </DialogTrigger>
-                    <DialogContent className="sm:max-w-md">
-                      <DialogHeader>
-                        <DialogTitle className="flex items-center gap-2">
-                          <Mail className="h-5 w-5 text-orange-500" />
-                          Email ROI Analysis
-                        </DialogTitle>
-                      </DialogHeader>
-                      <div className="space-y-4">
-                        <div className="bg-gray-50 p-3 rounded-lg">
-                          <p className="text-sm text-gray-600">
-                            <strong>From:</strong> {fromEmail}
-                          </p>
-                        </div>
-                        <div>
-                          <Label htmlFor="emailTo">Send to Email Address</Label>
-                          <Input
-                            id="emailTo"
-                            type="email"
-                            placeholder="recipient@hospital.com"
-                            value={emailTo}
-                            onChange={(e) => setEmailTo(e.target.value)}
-                          />
-                        </div>
-                        <div className="flex gap-2">
-                          <Button
-                            onClick={handleSendEmail}
-                            disabled={!emailTo || emailMutation.isPending}
-                            className="flex-1 bg-orange-500 hover:bg-orange-600"
-                          >
-                            {emailMutation.isPending ? (
-                              "Sending..."
-                            ) : (
-                              <>
-                                <Send className="h-4 w-4 mr-2" />
-                                Send Email
-                              </>
-                            )}
-                          </Button>
-                          <Button
-                            variant="outline"
-                            onClick={() => setIsEmailDialogOpen(false)}
-                          >
-                            Cancel
-                          </Button>
-                        </div>
-                      </div>
-                    </DialogContent>
-                  </Dialog>
-                </div>
-              </CardContent>
-            </Card>
+
 
 
           </>
