@@ -54,8 +54,8 @@ export default function ROICalculator() {
     // Step 4: Net Annual Financial Benefit
     const netAnnualFinancialBenefit = totalGrossFinancialBenefit - totalAnnualInvestmentCost;
 
-    // Final ROI
-    const finalROI = (netAnnualFinancialBenefit / totalAnnualInvestmentCost) * 100;
+    // Final ROI as ratio
+    const finalROI = netAnnualFinancialBenefit / totalAnnualInvestmentCost;
 
     return {
       totalAnnualTransfers,
@@ -253,9 +253,9 @@ export default function ROICalculator() {
                   
                   <div className="bg-gradient-to-r from-orange-500 to-teal-600 rounded-2xl p-8 mb-6">
                     <div className="text-7xl font-bold text-white mb-2">
-                      {results.finalROI.toFixed(1)}%
+                      {results.finalROI.toFixed(1)}:1
                     </div>
-                    <p className="text-xl text-white opacity-90">Annual ROI</p>
+                    <p className="text-xl text-white opacity-90">ROI Ratio</p>
                   </div>
                   
                   <div className="grid md:grid-cols-3 gap-4 text-center">
