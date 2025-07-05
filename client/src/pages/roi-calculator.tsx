@@ -53,6 +53,11 @@ export default function ROICalculator() {
     }).format(amount);
   };
 
+  const formatROIRatio = (roiPercentage: number): string => {
+    const ratio = roiPercentage / 100;
+    return `${ratio.toFixed(2)}:1`;
+  };
+
   const formatNumber = (number: number): string => {
     return new Intl.NumberFormat('en-US').format(number);
   };
@@ -181,8 +186,8 @@ export default function ROICalculator() {
               
               <div class="roi-highlight">
                 <h2>Your Projected ROI</h2>
-                <div class="roi-number">${results.finalROI.toFixed(1)}:1</div>
-                <p>For every $1 invested, you can expect $${results.finalROI.toFixed(1)} in return</p>
+                <div class="roi-number">${formatROIRatio(results.finalROI)}</div>
+                <p>For every $1 invested, you can expect $${(results.finalROI / 100 + 1).toFixed(2)} in return</p>
                 <p><strong>Net Annual Financial Benefit: ${formatCurrency(results.netAnnualFinancialBenefit)}</strong></p>
               </div>
               
@@ -265,7 +270,7 @@ export default function ROICalculator() {
   const handleSendEmail = () => {
     if (!results || !emailTo) return;
     
-    const subject = `Transfer Center ROI Analysis - ${results.finalROI.toFixed(1)}% ROI`;
+    const subject = `Transfer Center ROI Analysis - ${formatROIRatio(results.finalROI)} ROI`;
     const html = generateEmailHTML(results, parseInt(staffedBeds));
     
     emailMutation.mutate({ to: emailTo, subject, html });
@@ -515,14 +520,14 @@ export default function ROICalculator() {
                 
                 <div className="bg-gradient-to-r from-orange-500 to-teal-600 rounded-2xl p-8 mb-6">
                   <div className="text-7xl font-bold text-white mb-2">
-                    {results.finalROI.toFixed(1)}%
+                    {formatROIRatio(results.finalROI)}
                   </div>
-                  <p className="text-xl text-white opacity-90">ROI Percentage</p>
+                  <p className="text-xl text-white opacity-90">Return on Investment</p>
                 </div>
                 
                 <div className="bg-gray-50 rounded-lg p-6 mb-6">
                   <p className="text-lg text-gray-700 leading-relaxed">
-                    An ROI of <span className="font-bold text-orange-600">{results.finalROI.toFixed(1)}%</span> means 
+                    An ROI of <span className="font-bold text-orange-600">{formatROIRatio(results.finalROI)}</span> means 
                     that for every <span className="font-semibold">$1</span> invested in your transfer center operations, 
                     you can expect to receive <span className="font-bold text-green-600">${(results.finalROI / 100 + 1).toFixed(2)}</span> in return. 
                     This represents a highly favorable investment opportunity for your health system.
@@ -763,10 +768,10 @@ export default function ROICalculator() {
                       <hr className="my-2" />
                       <div className="flex justify-between items-center">
                         <span className="text-gray-700">
-                          ROI % = ({formatCurrency(results.netAnnualFinancialBenefit)} ÷ {formatCurrency(results.totalAnnualInvestmentCost)}) × 100
+                          ROI Ratio = ({formatCurrency(results.netAnnualFinancialBenefit)} ÷ {formatCurrency(results.totalAnnualInvestmentCost)}) + 1
                         </span>
                         <span className="text-2xl font-bold text-orange-600">
-                          {results.finalROI.toFixed(1)}%
+                          {formatROIRatio(results.finalROI)}
                         </span>
                       </div>
                     </div>
