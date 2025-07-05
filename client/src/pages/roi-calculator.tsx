@@ -684,7 +684,7 @@ export default function ROICalculator() {
                       <span className="text-gray-700">
                         Total Annual Transfers = {formatNumber(parseInt(staffedBeds))} × 12
                       </span>
-                      <span className="text-xl font-semibold text-conduit-orange">
+                      <span className="text-xl font-semibold text-gray-700">
                         {formatNumber(results.totalAnnualTransfers)}
                       </span>
                     </div>
