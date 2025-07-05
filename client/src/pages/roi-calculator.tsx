@@ -16,9 +16,9 @@ import conduitStatsImage from "@assets/conduit-success.png";
 const VARIABLE_COST_PER_TRANSFER = 225;
 const NET_REVENUE_PER_ADMISSION = 10000;
 const ANNUAL_OPERATIONAL_COST_SAVINGS_PER_BED = 2000;
-const LEAKAGE_RATE = 0.20;
-const LEAKAGE_RECAPTURE_RATE = 0.25;
-const NEW_INBOUND_VOLUME_GROWTH_RATE = 0.01;
+const REVENUE_LEAKAGE = 50000000; // $50M as per example
+const LEAKAGE_RECAPTURE_RATE = 0.20; // 20% as per example
+const NEW_INBOUND_VOLUME_GROWTH_RATE = 0.01; // 1% as per example
 
 interface CalculationResults {
   totalAnnualTransfers: number;
@@ -264,7 +264,7 @@ export default function ROICalculator() {
   const handleSendEmail = () => {
     if (!results || !emailTo) return;
     
-    const subject = `Transfer Center ROI Analysis - ${results.finalROI.toFixed(2)}:1 ROI`;
+    const subject = `Transfer Center ROI Analysis - ${results.finalROI.toFixed(1)}% ROI`;
     const html = generateEmailHTML(results, parseInt(staffedBeds));
     
     emailMutation.mutate({ to: emailTo, subject, html });
@@ -273,23 +273,30 @@ export default function ROICalculator() {
 
 
   const calculateROI = useCallback((beds: number): CalculationResults => {
-    // Step 1: Total Annual Transfers
+    // A. Investment
+    // Total Annual Investment Cost = Number of Transfers Per Year * Variable TC Cost per Transfer
     const totalAnnualTransfers = beds * 12;
-
-    // Step 2: Total Annual Investment Cost
     const totalAnnualInvestmentCost = totalAnnualTransfers * VARIABLE_COST_PER_TRANSFER;
 
-    // Step 3: Revenue Calculations
-    const recapturedLeakageRevenue = (totalAnnualTransfers * LEAKAGE_RATE) * LEAKAGE_RECAPTURE_RATE * NET_REVENUE_PER_ADMISSION;
-    const newGrowthRevenue = totalAnnualTransfers * NEW_INBOUND_VOLUME_GROWTH_RATE * NET_REVENUE_PER_ADMISSION;
+    // B. Benefits
+    // Annual Operational Costs Savings = Number of Staffed Beds * 2,000
     const annualOperationalCostSavings = beds * ANNUAL_OPERATIONAL_COST_SAVINGS_PER_BED;
+    
+    // Recaptured Leakage Revenue = Revenue Leakage * Leakage Recapture Rate
+    const recapturedLeakageRevenue = REVENUE_LEAKAGE * LEAKAGE_RECAPTURE_RATE;
+    
+    // New Growth Revenue = (Number of Transfers Per Year * Generating New Inbound Volume Rate) * Net Revenue per Admission
+    const newGrowthRevenue = (totalAnnualTransfers * NEW_INBOUND_VOLUME_GROWTH_RATE) * NET_REVENUE_PER_ADMISSION;
+    
+    // Total Gross Financial Benefit = Recaptured Leakage Revenue + New Growth Revenue + Annual Operational Costs Savings
     const totalGrossFinancialBenefit = recapturedLeakageRevenue + newGrowthRevenue + annualOperationalCostSavings;
 
-    // Step 4: Net Annual Financial Benefit
+    // Section 3: Final ROI Summary
+    // Net Annual Financial Benefit = Total Gross Financial Benefit - Total Annual Investment Cost
     const netAnnualFinancialBenefit = totalGrossFinancialBenefit - totalAnnualInvestmentCost;
 
-    // Final ROI as ratio
-    const finalROI = netAnnualFinancialBenefit / totalAnnualInvestmentCost;
+    // Return on Investment (ROI %) = (Net Annual Financial Benefit / Total Annual Investment Cost) * 100
+    const finalROI = (netAnnualFinancialBenefit / totalAnnualInvestmentCost) * 100;
 
     return {
       totalAnnualTransfers,
@@ -346,8 +353,8 @@ export default function ROICalculator() {
     { label: "Variable Cost per Transfer:", value: "$225" },
     { label: "Net Revenue per Admission:", value: "$10,000" },
     { label: "Annual Operational Cost Savings:", value: `$${ANNUAL_OPERATIONAL_COST_SAVINGS_PER_BED.toLocaleString()} per bed` },
-    { label: "Leakage Rate:", value: "20%" },
-    { label: "Leakage Recapture Rate:", value: "25%" },
+    { label: "Revenue Leakage:", value: "$50,000,000" },
+    { label: "Leakage Recapture Rate:", value: "20%" },
     { label: "New Inbound Volume Growth Rate:", value: "1%" }
   ];
 
@@ -458,16 +465,16 @@ export default function ROICalculator() {
                 
                 <div className="bg-gradient-to-r from-orange-500 to-teal-600 rounded-2xl p-8 mb-6">
                   <div className="text-7xl font-bold text-white mb-2">
-                    {results.finalROI.toFixed(2)}:1
+                    {results.finalROI.toFixed(1)}%
                   </div>
-                  <p className="text-xl text-white opacity-90">ROI Ratio</p>
+                  <p className="text-xl text-white opacity-90">ROI Percentage</p>
                 </div>
                 
                 <div className="bg-gray-50 rounded-lg p-6 mb-6">
                   <p className="text-lg text-gray-700 leading-relaxed">
-                    An ROI ratio of <span className="font-bold text-orange-600">{results.finalROI.toFixed(2)}:1</span> means 
+                    An ROI of <span className="font-bold text-orange-600">{results.finalROI.toFixed(1)}%</span> means 
                     that for every <span className="font-semibold">$1</span> invested in your transfer center operations, 
-                    you can expect to receive <span className="font-bold text-green-600">${results.finalROI.toFixed(2)}</span> in return. 
+                    you can expect to receive <span className="font-bold text-green-600">${(results.finalROI / 100 + 1).toFixed(2)}</span> in return. 
                     This represents a highly favorable investment opportunity for your health system.
                   </p>
                 </div>
@@ -643,26 +650,44 @@ export default function ROICalculator() {
 
                   {/* Revenue Calculations */}
                   <div className="bg-gray-50 rounded-lg p-4">
-                    <h4 className="text-lg font-medium text-gray-900 mb-3">Revenue Calculations</h4>
-                    <div className="space-y-2">
-                      <div className="flex justify-between">
-                        <span className="text-gray-700">Recaptured Leakage Revenue:</span>
-                        <span className="font-semibold text-green-600">
-                          {formatCurrency(results.recapturedLeakageRevenue)}
-                        </span>
+                    <h4 className="text-lg font-medium text-gray-900 mb-3">Benefits Calculations</h4>
+                    <div className="space-y-3">
+                      <div className="space-y-1">
+                        <div className="flex justify-between">
+                          <span className="text-gray-700">Recaptured Leakage Revenue:</span>
+                          <span className="font-semibold text-green-600">
+                            {formatCurrency(results.recapturedLeakageRevenue)}
+                          </span>
+                        </div>
+                        <div className="text-sm text-gray-500 ml-4">
+                          Formula: $50,000,000 × 20% = {formatCurrency(results.recapturedLeakageRevenue)}
+                        </div>
                       </div>
-                      <div className="flex justify-between">
-                        <span className="text-gray-700">New Growth Revenue:</span>
-                        <span className="font-semibold text-green-600">
-                          {formatCurrency(results.newGrowthRevenue)}
-                        </span>
+                      
+                      <div className="space-y-1">
+                        <div className="flex justify-between">
+                          <span className="text-gray-700">New Growth Revenue:</span>
+                          <span className="font-semibold text-green-600">
+                            {formatCurrency(results.newGrowthRevenue)}
+                          </span>
+                        </div>
+                        <div className="text-sm text-gray-500 ml-4">
+                          Formula: ({formatNumber(results.totalAnnualTransfers)} × 1%) × $10,000 = {formatCurrency(results.newGrowthRevenue)}
+                        </div>
                       </div>
-                      <div className="flex justify-between">
-                        <span className="text-gray-700">Operational Cost Savings:</span>
-                        <span className="font-semibold text-green-600">
-                          {formatCurrency(parseInt(staffedBeds) * ANNUAL_OPERATIONAL_COST_SAVINGS_PER_BED)}
-                        </span>
+                      
+                      <div className="space-y-1">
+                        <div className="flex justify-between">
+                          <span className="text-gray-700">Operational Cost Savings:</span>
+                          <span className="font-semibold text-green-600">
+                            {formatCurrency(parseInt(staffedBeds) * ANNUAL_OPERATIONAL_COST_SAVINGS_PER_BED)}
+                          </span>
+                        </div>
+                        <div className="text-sm text-gray-500 ml-4">
+                          Formula: {formatNumber(parseInt(staffedBeds))} × $2,000 = {formatCurrency(parseInt(staffedBeds) * ANNUAL_OPERATIONAL_COST_SAVINGS_PER_BED)}
+                        </div>
                       </div>
+                      
                       <hr className="my-2" />
                       <div className="flex justify-between">
                         <span className="text-gray-900 font-medium">Total Gross Financial Benefit:</span>
@@ -673,16 +698,27 @@ export default function ROICalculator() {
                     </div>
                   </div>
 
-                  {/* Net Benefit */}
+                  {/* Net Benefit and ROI */}
                   <div className="bg-gray-50 rounded-lg p-4">
-                    <h4 className="text-lg font-medium text-gray-900 mb-3">Net Benefit</h4>
-                    <div className="flex justify-between items-center">
-                      <span className="text-gray-700">
-                        Net Annual Financial Benefit = {formatCurrency(results.totalGrossFinancialBenefit)} - {formatCurrency(results.totalAnnualInvestmentCost)}
-                      </span>
-                      <span className="text-xl font-semibold text-green-600">
-                        {formatCurrency(results.netAnnualFinancialBenefit)}
-                      </span>
+                    <h4 className="text-lg font-medium text-gray-900 mb-3">Final ROI Summary</h4>
+                    <div className="space-y-3">
+                      <div className="flex justify-between items-center">
+                        <span className="text-gray-700">
+                          Net Annual Financial Benefit = {formatCurrency(results.totalGrossFinancialBenefit)} - {formatCurrency(results.totalAnnualInvestmentCost)}
+                        </span>
+                        <span className="text-xl font-semibold text-green-600">
+                          {formatCurrency(results.netAnnualFinancialBenefit)}
+                        </span>
+                      </div>
+                      <hr className="my-2" />
+                      <div className="flex justify-between items-center">
+                        <span className="text-gray-700">
+                          ROI % = ({formatCurrency(results.netAnnualFinancialBenefit)} ÷ {formatCurrency(results.totalAnnualInvestmentCost)}) × 100
+                        </span>
+                        <span className="text-2xl font-bold text-orange-600">
+                          {results.finalROI.toFixed(1)}%
+                        </span>
+                      </div>
                     </div>
                   </div>
                 </div>
