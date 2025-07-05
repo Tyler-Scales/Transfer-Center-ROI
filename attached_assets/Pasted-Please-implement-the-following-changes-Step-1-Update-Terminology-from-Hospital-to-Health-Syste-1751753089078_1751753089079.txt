@@ -1,0 +1,57 @@
+Please implement the following changes:
+
+Step 1: Update Terminology from "Hospital" to "Health System"
+
+Throughout the website, replace all instances of "your hospital" with "your health system" or "within your network" as appropriate for the context. Specific locations for this change include:
+
+Main Headline/Instructions:
+
+Original: This ROI calculator determines how much you can save when you trust Conduit with your transfer center needs. Enter your hospital's staffed bed count below to see your potential return on investment from partnering with our expert transfer center team.
+
+Revised: This ROI calculator determines how much you can save when you trust Conduit Health Partners with your transfer center needs. Enter the total staffed bed counts of the hospitals within your health system for this section to see your potential return on investment from partnering with our expert transfer center team.
+
+Input Field Label:
+
+Original: Enter the total number of staffed beds in your facility
+
+Revised: Enter the total number of staffed beds within your health system
+
+Results/Summary Statement:
+
+Original: This represents a highly favorable investment opportunity for your hospital.
+
+Revised: This represents a highly favorable investment opportunity for your health system.
+
+Contact Form CTA:
+
+Original: Check if you'd like to hear from our team about how we can make this ROI a reality at your hospital
+
+Revised: Check if you'd like to hear from our team about how we can make this ROI a reality for your health system
+
+Step 2: Update Brand Name
+
+In all instances on the website, change the name "Conduit" to the full brand name: "Conduit Health Partners". This includes the headline mentioned in Step 1.
+
+Step 3: Revise ROI Calculator Variables and Formulas
+
+Update the backend logic and frontend display of the calculator with the following adjustments:
+
+Set Variable Cost per Transfer:
+
+Change the value for the "variable cost per transfer" to $225.
+
+Set Annual Operational Costs Savings:
+
+Make this value dynamic. The formula should be $2,000 multiplied by the total number of staffed beds entered. (e.g., Annual Operational Costs Savings = Number of Staffed Beds * 2000).
+
+Clarify Monthly Transfer Calculation:
+
+In the "Calculation Assumptions" or a relevant section, add a note explaining how the number of monthly transfers is determined.
+
+Add the formula: Monthly transfers = Number of staffed beds
+
+Step 4: Add a Disclaimer to Calculation Assumptions
+
+Under the "Calculation Assumptions" section, insert the following text to provide context for the user:
+
+"Figures shown are based on industry benchmarks and conservative assumptions to ensure a reliable ROI estimate. For a customized analysis using your health system’s data, contact us directly."
