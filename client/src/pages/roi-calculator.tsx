@@ -529,7 +529,7 @@ export default function ROICalculator() {
                   <p className="text-lg text-gray-700 leading-relaxed">
                     An ROI of <span className="font-bold text-orange-600">{formatROIRatio(results.finalROI)}</span> means 
                     that for every <span className="font-semibold">$1</span> invested in your transfer center operations, 
-                    you can expect to receive <span className="font-bold text-green-600">${(results.finalROI / 100 + 1).toFixed(2)}</span> in return. 
+                    you can expect to receive <span className="font-bold text-green-600">${(results.finalROI / 100).toFixed(2)}</span> in return. 
                     This represents a highly favorable investment opportunity for your health system.
                   </p>
                 </div>
@@ -770,7 +770,7 @@ export default function ROICalculator() {
                         <span className="text-gray-700">
                           ROI Ratio = ({formatCurrency(results.netAnnualFinancialBenefit)} ÷ {formatCurrency(results.totalAnnualInvestmentCost)}) + 1
                         </span>
-                        <span className="text-2xl font-bold text-orange-600">
+                        <span className="text-2xl font-bold text-green-600">
                           {formatROIRatio(results.finalROI)}
                         </span>
                       </div>
