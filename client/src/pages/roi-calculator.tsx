@@ -32,6 +32,7 @@ interface CalculationResults {
 
 export default function ROICalculator() {
   const [staffedBeds, setStaffedBeds] = useState<string>("");
+  const [revenueLeakage, setRevenueLeakage] = useState<string>("");
   const [results, setResults] = useState<CalculationResults | null>(null);
   const [emailTo, setEmailTo] = useState<string>("");
   const [isEmailDialogOpen, setIsEmailDialogOpen] = useState<boolean>(false);
@@ -272,7 +273,7 @@ export default function ROICalculator() {
 
 
 
-  const calculateROI = useCallback((beds: number): CalculationResults => {
+  const calculateROI = useCallback((beds: number, leakageAmount: number): CalculationResults => {
     // A. Investment
     // Total Annual Investment Cost = Number of Transfers Per Year * Variable TC Cost per Transfer
     const totalAnnualTransfers = beds * 12;
@@ -283,7 +284,7 @@ export default function ROICalculator() {
     const annualOperationalCostSavings = beds * ANNUAL_OPERATIONAL_COST_SAVINGS_PER_BED;
     
     // Recaptured Leakage Revenue = Revenue Leakage * Leakage Recapture Rate
-    const recapturedLeakageRevenue = REVENUE_LEAKAGE * LEAKAGE_RECAPTURE_RATE;
+    const recapturedLeakageRevenue = leakageAmount * LEAKAGE_RECAPTURE_RATE;
     
     // New Growth Revenue = (Number of Transfers Per Year * Generating New Inbound Volume Rate) * Net Revenue per Admission
     const newGrowthRevenue = (totalAnnualTransfers * NEW_INBOUND_VOLUME_GROWTH_RATE) * NET_REVENUE_PER_ADMISSION;
@@ -309,8 +310,17 @@ export default function ROICalculator() {
     };
   }, []);
 
-  const handleInputChange = (value: string) => {
+  const handleBedsInputChange = (value: string) => {
     setStaffedBeds(value);
+    // Reset results when input changes
+    if (hasCalculated) {
+      setResults(null);
+      setHasCalculated(false);
+    }
+  };
+
+  const handleLeakageInputChange = (value: string) => {
+    setRevenueLeakage(value);
     // Reset results when input changes
     if (hasCalculated) {
       setResults(null);
@@ -320,10 +330,21 @@ export default function ROICalculator() {
 
   const handleCalculate = async () => {
     const beds = parseInt(staffedBeds);
+    const leakage = parseInt(revenueLeakage);
+    
     if (!beds || beds <= 0) {
       toast({
         title: "Invalid input",
         description: "Please enter a valid number of staffed beds.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    if (!leakage || leakage <= 0) {
+      toast({
+        title: "Invalid input",
+        description: "Please enter a valid revenue leakage amount.",
         variant: "destructive",
       });
       return;
@@ -334,7 +355,7 @@ export default function ROICalculator() {
     // Simulate calculation time with animation
     await new Promise(resolve => setTimeout(resolve, 2000));
     
-    const calculationResults = calculateROI(beds);
+    const calculationResults = calculateROI(beds, leakage);
     setResults(calculationResults);
     setIsCalculating(false);
     setHasCalculated(true);
@@ -342,6 +363,7 @@ export default function ROICalculator() {
 
   const handleReset = () => {
     setStaffedBeds("");
+    setRevenueLeakage("");
     setResults(null);
     setHasCalculated(false);
     setEmailTo("");
@@ -353,7 +375,7 @@ export default function ROICalculator() {
     { label: "Variable Cost per Transfer:", value: "$225" },
     { label: "Net Revenue per Admission:", value: "$10,000" },
     { label: "Annual Operational Cost Savings:", value: `$${ANNUAL_OPERATIONAL_COST_SAVINGS_PER_BED.toLocaleString()} per bed` },
-    { label: "Revenue Leakage:", value: "$50,000,000" },
+    { label: "Revenue Leakage:", value: "User Input" },
     { label: "Leakage Recapture Rate:", value: "20%" },
     { label: "New Inbound Volume Growth Rate:", value: "1%" }
   ];
@@ -387,43 +409,71 @@ export default function ROICalculator() {
               <h3 className="text-xl font-semibold text-gray-900">Share About Your Health System</h3>
             </div>
             
-            <div className="max-w-md">
-              <Label htmlFor="staffedBeds" className="text-sm font-medium text-gray-700 mb-2">
-                Number of Staffed Beds
-              </Label>
-              <div className="flex gap-3">
+            <div className="grid md:grid-cols-2 gap-6">
+              {/* Staffed Beds Input */}
+              <div>
+                <Label htmlFor="staffedBeds" className="text-sm font-medium text-gray-700 mb-2">
+                  Number of Staffed Beds
+                </Label>
                 <Input
                   id="staffedBeds"
                   type="number"
                   min="1"
                   placeholder="Enter number of staffed beds"
                   value={staffedBeds}
-                  onChange={(e) => handleInputChange(e.target.value)}
+                  onChange={(e) => handleBedsInputChange(e.target.value)}
                   onKeyDown={(e) => {
-                    if (e.key === 'Enter' && staffedBeds && parseInt(staffedBeds) > 0 && !isCalculating) {
+                    if (e.key === 'Enter' && staffedBeds && revenueLeakage && parseInt(staffedBeds) > 0 && parseInt(revenueLeakage) > 0 && !isCalculating) {
                       handleCalculate();
                     }
                   }}
-                  className="text-lg py-3 focus:ring-2 focus:ring-conduit-orange focus:border-conduit-orange flex-1"
+                  className="text-lg py-3 focus:ring-2 focus:ring-conduit-orange focus:border-conduit-orange"
                   disabled={isCalculating}
                 />
-                <Button
-                  onClick={handleCalculate}
-                  disabled={!staffedBeds || parseInt(staffedBeds) <= 0 || isCalculating}
-                  className="bg-orange-500 hover:bg-orange-600 text-white px-6 py-3 text-lg font-semibold"
-                >
-                  {isCalculating ? "Calculating..." : "Calculate"}
-                </Button>
-                <Button
-                  onClick={handleReset}
-                  disabled={isCalculating}
-                  variant="outline"
-                  className="px-6 py-3 text-lg font-semibold border-gray-300 text-gray-600 hover:bg-gray-50"
-                >
-                  Reset
-                </Button>
+                <p className="text-sm text-gray-500 mt-2">Enter the total number of staffed beds within your health system</p>
               </div>
-              <p className="text-sm text-gray-500 mt-2">Enter the total number of staffed beds within your health system</p>
+
+              {/* Revenue Leakage Input */}
+              <div>
+                <Label htmlFor="revenueLeakage" className="text-sm font-medium text-gray-700 mb-2">
+                  Annual Revenue Leakage ($)
+                </Label>
+                <Input
+                  id="revenueLeakage"
+                  type="number"
+                  min="1"
+                  placeholder="Enter annual revenue leakage"
+                  value={revenueLeakage}
+                  onChange={(e) => handleLeakageInputChange(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' && staffedBeds && revenueLeakage && parseInt(staffedBeds) > 0 && parseInt(revenueLeakage) > 0 && !isCalculating) {
+                      handleCalculate();
+                    }
+                  }}
+                  className="text-lg py-3 focus:ring-2 focus:ring-conduit-orange focus:border-conduit-orange"
+                  disabled={isCalculating}
+                />
+                <p className="text-sm text-gray-500 mt-2">Enter your health system's annual revenue leakage amount</p>
+              </div>
+            </div>
+            
+            {/* Calculate and Reset Buttons */}
+            <div className="flex gap-3 justify-center mt-6">
+              <Button
+                onClick={handleCalculate}
+                disabled={!staffedBeds || !revenueLeakage || parseInt(staffedBeds) <= 0 || parseInt(revenueLeakage) <= 0 || isCalculating}
+                className="bg-orange-500 hover:bg-orange-600 text-white px-8 py-3 text-lg font-semibold"
+              >
+                {isCalculating ? "Calculating..." : "Calculate ROI"}
+              </Button>
+              <Button
+                onClick={handleReset}
+                disabled={isCalculating}
+                variant="outline"
+                className="px-8 py-3 text-lg font-semibold border-gray-300 text-gray-600 hover:bg-gray-50"
+              >
+                Reset
+              </Button>
             </div>
           </CardContent>
         </Card>
@@ -660,7 +710,7 @@ export default function ROICalculator() {
                           </span>
                         </div>
                         <div className="text-sm text-gray-500 ml-4">
-                          Formula: $50,000,000 × 20% = {formatCurrency(results.recapturedLeakageRevenue)}
+                          Formula: {formatCurrency(parseInt(revenueLeakage))} × 20% = {formatCurrency(results.recapturedLeakageRevenue)}
                         </div>
                       </div>
                       
