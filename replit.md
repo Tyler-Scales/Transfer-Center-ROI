@@ -111,6 +111,11 @@ Changelog:
 - July 03, 2025. Initial setup with hospital transfer center ROI calculator
 - July 03, 2025. Updated branding to Conduit Health Partners with orange/teal color scheme and logo integration
 - July 03, 2025. Fixed JSX syntax errors and improved header section with cleaner layout, enhanced description text, and larger Email Results button
+- July 05, 2025. Major update: Changed terminology from "hospital" to "health system" throughout the application
+- July 05, 2025. Updated all brand references from "Conduit" to full "Conduit Health Partners" name
+- July 05, 2025. Revised ROI calculation: Updated variable cost per transfer to $225, made annual operational cost savings dynamic ($2,000 per bed)
+- July 05, 2025. Added monthly transfer calculation explanation and industry benchmark disclaimer to Calculation Assumptions section
+- July 05, 2025. Enhanced ROI precision to display 2 decimal places instead of 1 for more accurate results
 ```
 
 ## User Preferences

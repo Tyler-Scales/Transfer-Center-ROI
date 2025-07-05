@@ -15,7 +15,7 @@ import conduitStatsImage from "@assets/conduit-success.png";
 // Calculation constants
 const VARIABLE_COST_PER_TRANSFER = 225;
 const NET_REVENUE_PER_ADMISSION = 10000;
-const ANNUAL_OPERATIONAL_COST_SAVINGS = 2000000;
+const ANNUAL_OPERATIONAL_COST_SAVINGS_PER_BED = 2000;
 const LEAKAGE_RATE = 0.20;
 const LEAKAGE_RECAPTURE_RATE = 0.25;
 const NEW_INBOUND_VOLUME_GROWTH_RATE = 0.01;
@@ -195,7 +195,7 @@ export default function ROICalculator() {
                     <strong>Transfers per Bed:</strong><br>12 annually
                   </div>
                   <div class="assumption-item">
-                    <strong>Cost per Transfer:</strong><br>$200
+                    <strong>Cost per Transfer:</strong><br>$225
                   </div>
                   <div class="assumption-item">
                     <strong>Net Revenue per Admission:</strong><br>$10,000
@@ -282,7 +282,8 @@ export default function ROICalculator() {
     // Step 3: Revenue Calculations
     const recapturedLeakageRevenue = (totalAnnualTransfers * LEAKAGE_RATE) * LEAKAGE_RECAPTURE_RATE * NET_REVENUE_PER_ADMISSION;
     const newGrowthRevenue = totalAnnualTransfers * NEW_INBOUND_VOLUME_GROWTH_RATE * NET_REVENUE_PER_ADMISSION;
-    const totalGrossFinancialBenefit = recapturedLeakageRevenue + newGrowthRevenue + ANNUAL_OPERATIONAL_COST_SAVINGS;
+    const annualOperationalCostSavings = beds * ANNUAL_OPERATIONAL_COST_SAVINGS_PER_BED;
+    const totalGrossFinancialBenefit = recapturedLeakageRevenue + newGrowthRevenue + annualOperationalCostSavings;
 
     // Step 4: Net Annual Financial Benefit
     const netAnnualFinancialBenefit = totalGrossFinancialBenefit - totalAnnualInvestmentCost;
@@ -342,9 +343,9 @@ export default function ROICalculator() {
   };
 
   const assumptions = [
-    { label: "Variable Cost per Transfer:", value: "$200" },
+    { label: "Variable Cost per Transfer:", value: "$225" },
     { label: "Net Revenue per Admission:", value: "$10,000" },
-    { label: "Annual Operational Cost Savings:", value: "$2,000,000" },
+    { label: "Annual Operational Cost Savings:", value: `$${ANNUAL_OPERATIONAL_COST_SAVINGS_PER_BED.toLocaleString()} per bed` },
     { label: "Leakage Rate:", value: "20%" },
     { label: "Leakage Recapture Rate:", value: "25%" },
     { label: "New Inbound Volume Growth Rate:", value: "1%" }
@@ -366,7 +367,7 @@ export default function ROICalculator() {
       <div className="max-w-4xl mx-auto mb-8">
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold text-gray-800 mb-4">Transfer Center ROI Calculator</h1>
-          <p className="text-gray-600 text-lg">This ROI calculator determines how much you can save when you trust <span className="font-bold text-conduit-orange">Conduit</span> with your transfer center needs. Enter your hospital's staffed bed count below to see your potential <span className="font-bold text-conduit-orange">return on investment</span> from partnering with our <span className="font-bold text-conduit-orange">expert transfer center team</span>.</p>
+          <p className="text-gray-600 text-lg">This ROI calculator determines how much you can save when you trust <span className="font-bold text-conduit-orange">Conduit Health Partners</span> with your transfer center needs. Enter the total staffed bed counts of the hospitals within your <span className="font-bold text-conduit-orange">health system</span> for this section to see your potential <span className="font-bold text-conduit-orange">return on investment</span> from partnering with our <span className="font-bold text-conduit-orange">expert transfer center team</span>.</p>
         </div>
       </div>
 
@@ -376,7 +377,7 @@ export default function ROICalculator() {
           <CardContent className="p-6">
             <div className="flex items-center mb-4">
               <Building2 className="h-5 w-5 text-conduit-orange mr-3" />
-              <h3 className="text-xl font-semibold text-gray-900">Share About Your Hospital</h3>
+              <h3 className="text-xl font-semibold text-gray-900">Share About Your Health System</h3>
             </div>
             
             <div className="max-w-md">
@@ -415,7 +416,7 @@ export default function ROICalculator() {
                   Reset
                 </Button>
               </div>
-              <p className="text-sm text-gray-500 mt-2">Enter the total number of staffed beds in your facility</p>
+              <p className="text-sm text-gray-500 mt-2">Enter the total number of staffed beds within your health system</p>
             </div>
           </CardContent>
         </Card>
@@ -467,7 +468,7 @@ export default function ROICalculator() {
                     An ROI ratio of <span className="font-bold text-orange-600">{results.finalROI.toFixed(2)}:1</span> means 
                     that for every <span className="font-semibold">$1</span> invested in your transfer center operations, 
                     you can expect to receive <span className="font-bold text-green-600">${results.finalROI.toFixed(2)}</span> in return. 
-                    This represents a highly favorable investment opportunity for your hospital.
+                    This represents a highly favorable investment opportunity for your health system.
                   </p>
                 </div>
               </div>
@@ -487,7 +488,7 @@ export default function ROICalculator() {
                       className="mt-1"
                     />
                     <label htmlFor="teamContact" className="text-sm text-gray-600 leading-relaxed cursor-pointer">
-                      Check if you'd like to hear from our team about how we can make this ROI a reality at your hospital
+                      Check if you'd like to hear from our team about how we can make this ROI a reality for your health system
                     </label>
                   </div>
                 </div>
@@ -561,7 +562,7 @@ export default function ROICalculator() {
               <h3 className="text-xl font-semibold text-gray-900">Calculation Assumptions</h3>
             </div>
             
-            <div className="grid md:grid-cols-2 gap-6">
+            <div className="grid md:grid-cols-2 gap-6 mb-6">
               <div className="space-y-4">
                 {assumptions.slice(0, 3).map((assumption, index) => (
                   <div key={index} className="flex justify-between py-2 border-b border-gray-100">
@@ -579,6 +580,24 @@ export default function ROICalculator() {
                   </div>
                 ))}
               </div>
+            </div>
+            
+            {/* Monthly Transfer Calculation Explanation */}
+            <div className="bg-blue-50 rounded-lg p-4 mb-4">
+              <h4 className="text-lg font-medium text-gray-900 mb-2">Monthly Transfer Calculation</h4>
+              <p className="text-gray-700">
+                <strong>Formula:</strong> Monthly transfers = Number of staffed beds
+              </p>
+              <p className="text-sm text-gray-600 mt-1">
+                This assumes one transfer per bed per month as an industry benchmark.
+              </p>
+            </div>
+            
+            {/* Disclaimer */}
+            <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4">
+              <p className="text-sm text-gray-700">
+                <strong>Disclaimer:</strong> Figures shown are based on industry benchmarks and conservative assumptions to ensure a reliable ROI estimate. For a customized analysis using your health system's data, contact us directly.
+              </p>
             </div>
           </CardContent>
         </Card>
@@ -640,7 +659,9 @@ export default function ROICalculator() {
                       </div>
                       <div className="flex justify-between">
                         <span className="text-gray-700">Operational Cost Savings:</span>
-                        <span className="font-semibold text-green-600">$2,000,000</span>
+                        <span className="font-semibold text-green-600">
+                          {formatCurrency(parseInt(staffedBeds) * ANNUAL_OPERATIONAL_COST_SAVINGS_PER_BED)}
+                        </span>
                       </div>
                       <hr className="my-2" />
                       <div className="flex justify-between">
@@ -673,7 +694,7 @@ export default function ROICalculator() {
               <CardContent className="p-6">
                 <div className="flex items-center mb-6">
                   <Building2 className="h-5 w-5 text-conduit-orange mr-3" />
-                  <h3 className="text-xl font-semibold text-gray-900">About Conduit</h3>
+                  <h3 className="text-xl font-semibold text-gray-900">About Conduit Health Partners</h3>
                 </div>
                 
                 <p className="text-gray-700 text-lg mb-6 leading-relaxed">
@@ -690,7 +711,7 @@ export default function ROICalculator() {
 
                 <div className="text-center">
                   <Button className="bg-conduit-orange hover:bg-orange-600 text-white px-8 py-3 rounded-lg font-semibold text-lg">
-                    Contact Conduit Today
+                    Contact Conduit Health Partners Today
                   </Button>
                 </div>
               </CardContent>
