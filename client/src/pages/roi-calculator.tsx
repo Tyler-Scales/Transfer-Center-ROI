@@ -287,11 +287,8 @@ export default function ROICalculator() {
     // Annual Operational Costs Savings = Number of Staffed Beds * 2,000
     const annualOperationalCostSavings = beds * ANNUAL_OPERATIONAL_COST_SAVINGS_PER_BED;
     
-    // Annual Revenue Leakage = Number of Staffed Beds * 10,000 * 0.2
-    const annualRevenueLeakage = beds * 10000 * 0.2;
-    
-    // Recaptured Leakage Revenue = Revenue Leakage * Leakage Recapture Rate
-    const recapturedLeakageRevenue = annualRevenueLeakage * LEAKAGE_RECAPTURE_RATE;
+    // Recaptured Leakage Revenue = Number of Staffed Beds * 10,000 * 0.2
+    const recapturedLeakageRevenue = beds * 10000 * 0.2;
     
     // New Growth Revenue = (Number of Transfers Per Year * Generating New Inbound Volume Rate) * Net Revenue per Admission
     const newGrowthRevenue = (totalAnnualTransfers * NEW_INBOUND_VOLUME_GROWTH_RATE) * NET_REVENUE_PER_ADMISSION;
@@ -671,7 +668,7 @@ export default function ROICalculator() {
                           </span>
                         </div>
                         <div className="text-sm text-gray-500 ml-4">
-                          Formula: ({formatNumber(parseInt(staffedBeds))} × $10,000 × 0.2) × 20% = {formatCurrency(results.recapturedLeakageRevenue)}
+                          Formula: {formatNumber(parseInt(staffedBeds))} × $10,000 × 0.2 = {formatCurrency(results.recapturedLeakageRevenue)}
                         </div>
                       </div>
                       
