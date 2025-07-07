@@ -117,7 +117,7 @@ Changelog:
 - July 05, 2025. Added monthly transfer calculation explanation and industry benchmark disclaimer to Calculation Assumptions section
 - July 05, 2025. Enhanced ROI precision to display 2 decimal places instead of 1 for more accurate results
 - July 07, 2025. Changed ROI display from percentage to ratio format (e.g., 3.89:1 instead of 388.9%)
-- July 07, 2025. Updated revenue leakage calculation from user input to formula: Beds × 12 × $10,000 × 20%
+- July 07, 2025. Updated revenue calculation: Revenue Leakage = Beds × 12 × $10,000 × 20%, Revenue Capture = Leakage × 20%
 - July 07, 2025. Simplified UI to only require staffed beds input, removing revenue leakage input field
 ```
 

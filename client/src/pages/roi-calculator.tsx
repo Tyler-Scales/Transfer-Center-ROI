@@ -287,8 +287,11 @@ export default function ROICalculator() {
     // Annual Operational Costs Savings = Number of Staffed Beds * 2,000
     const annualOperationalCostSavings = beds * ANNUAL_OPERATIONAL_COST_SAVINGS_PER_BED;
     
-    // Recaptured Leakage Revenue = Number of Staffed Beds * 12 * 10,000 * 0.2
-    const recapturedLeakageRevenue = beds * 12 * 10000 * 0.2;
+    // Revenue Leakage = Number of Staffed Beds * 12 * 10,000 * 0.2
+    const revenueLeakage = beds * 12 * 10000 * 0.2;
+    
+    // Recaptured Leakage Revenue = Revenue Leakage * 0.2 (20% capture rate)
+    const recapturedLeakageRevenue = revenueLeakage * 0.2;
     
     // New Growth Revenue = (Number of Transfers Per Year * Generating New Inbound Volume Rate) * Net Revenue per Admission
     const newGrowthRevenue = (totalAnnualTransfers * NEW_INBOUND_VOLUME_GROWTH_RATE) * NET_REVENUE_PER_ADMISSION;
@@ -362,7 +365,7 @@ export default function ROICalculator() {
     { label: "Net Revenue per Admission:", value: "$10,000" },
     { label: "Annual Operational Cost Savings:", value: `$${ANNUAL_OPERATIONAL_COST_SAVINGS_PER_BED.toLocaleString()} per bed` },
     { label: "Revenue Leakage Formula:", value: "Beds × 12 × $10,000 × 20%" },
-    { label: "Leakage Recapture Rate:", value: "20%" },
+    { label: "Revenue Capture Rate:", value: "20% of leakage" },
     { label: "New Inbound Volume Growth Rate:", value: "1%" },
     { label: "Annual Transfer Calculation:", value: "Beds × 12" }
   ];
@@ -660,7 +663,7 @@ export default function ROICalculator() {
                           </span>
                         </div>
                         <div className="text-sm text-gray-500 ml-4">
-                          Formula: {formatNumber(parseInt(staffedBeds))} × 12 × $10,000 × 20% = {formatCurrency(results.recapturedLeakageRevenue)}
+                          Formula: ({formatNumber(parseInt(staffedBeds))} × 12 × $10,000 × 20%) × 20% = {formatCurrency(results.recapturedLeakageRevenue)}
                         </div>
                       </div>
                       
