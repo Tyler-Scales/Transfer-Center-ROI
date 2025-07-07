@@ -363,7 +363,8 @@ export default function ROICalculator() {
     { label: "Annual Operational Cost Savings:", value: `$${ANNUAL_OPERATIONAL_COST_SAVINGS_PER_BED.toLocaleString()} per bed` },
     { label: "Revenue Leakage Formula:", value: "Beds × $10,000 × 20%" },
     { label: "Leakage Recapture Rate:", value: "20%" },
-    { label: "New Inbound Volume Growth Rate:", value: "1%" }
+    { label: "New Inbound Volume Growth Rate:", value: "1%" },
+    { label: "Monthly Transfer Calculation:", value: "1 transfer per bed per month (industry benchmark)" }
   ];
 
   return (
@@ -597,16 +598,7 @@ export default function ROICalculator() {
               </div>
             </div>
             
-            {/* Monthly Transfer Calculation Explanation */}
-            <div className="bg-blue-50 rounded-lg p-4 mb-4">
-              <h4 className="text-lg font-medium text-gray-900 mb-2">Monthly Transfer Calculation</h4>
-              <p className="text-gray-700">
-                <strong>Formula:</strong> Monthly transfers = Number of staffed beds
-              </p>
-              <p className="text-sm text-gray-600 mt-1">
-                This assumes one transfer per bed per month as an industry benchmark.
-              </p>
-            </div>
+
             
             {/* Disclaimer */}
             <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4">
