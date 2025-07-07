@@ -116,6 +116,9 @@ Changelog:
 - July 05, 2025. Revised ROI calculation: Updated variable cost per transfer to $225, made annual operational cost savings dynamic ($2,000 per bed)
 - July 05, 2025. Added monthly transfer calculation explanation and industry benchmark disclaimer to Calculation Assumptions section
 - July 05, 2025. Enhanced ROI precision to display 2 decimal places instead of 1 for more accurate results
+- July 07, 2025. Changed ROI display from percentage to ratio format (e.g., 3.89:1 instead of 388.9%)
+- July 07, 2025. Updated revenue leakage calculation from user input to formula: Beds × 12 × $10,000 × 20%
+- July 07, 2025. Simplified UI to only require staffed beds input, removing revenue leakage input field
 ```
 
 ## User Preferences
