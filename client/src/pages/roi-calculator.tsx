@@ -364,7 +364,7 @@ export default function ROICalculator() {
     { label: "Revenue Leakage Formula:", value: "Beds × $10,000 × 20%" },
     { label: "Leakage Recapture Rate:", value: "20%" },
     { label: "New Inbound Volume Growth Rate:", value: "1%" },
-    { label: "Annual Transfer Calculation:", value: "Beds × 12 transfers/year" }
+    { label: "Annual Transfer Calculation:", value: "Beds × 12" }
   ];
 
   return (
