@@ -4,7 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Building2, Settings, Calculator, TrendingUp, BarChart3, Mail, Send } from "lucide-react";
 import { useMutation } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
@@ -549,6 +549,9 @@ export default function ROICalculator() {
                         <Mail className="h-5 w-5 text-orange-500" />
                         Email ROI Analysis
                       </DialogTitle>
+                      <DialogDescription>
+                        Send your ROI calculation results to an email address for future reference and team sharing.
+                      </DialogDescription>
                     </DialogHeader>
                     <div className="space-y-4">
                       <div className="bg-gray-50 p-3 rounded-lg">
