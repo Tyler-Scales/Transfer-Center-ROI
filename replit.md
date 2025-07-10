@@ -119,6 +119,7 @@ Changelog:
 - July 07, 2025. Changed ROI display from percentage to ratio format (e.g., 3.89:1 instead of 388.9%)
 - July 07, 2025. Updated revenue calculation: Revenue Leakage = Beds × 12 × $10,000 × 20%, Revenue Capture = Leakage × 20%
 - July 07, 2025. Simplified UI to only require staffed beds input, removing revenue leakage input field
+- July 07, 2025. Added "Estimated Annual Revenue Leakage" input field in two-column layout with repositioned Calculate/Reset buttons
 ```
 
 ## User Preferences

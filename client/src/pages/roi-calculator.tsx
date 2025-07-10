@@ -407,45 +407,28 @@ export default function ROICalculator() {
                 <Label htmlFor="staffedBeds" className="text-sm font-medium text-gray-700 mb-2">
                   Number of Staffed Beds
                 </Label>
-                <div className="flex gap-3">
-                  <Input
-                    id="staffedBeds"
-                    type="number"
-                    min="1"
-                    placeholder="Enter number of staffed beds"
-                    value={staffedBeds}
-                    onChange={(e) => handleBedsInputChange(e.target.value)}
-                    onKeyDown={(e) => {
-                      if (e.key === 'Enter' && staffedBeds && parseInt(staffedBeds) > 0 && !isCalculating) {
-                        handleCalculate();
-                      }
-                    }}
-                    className="text-lg py-3 focus:ring-2 focus:ring-conduit-orange focus:border-conduit-orange flex-1"
-                    disabled={isCalculating}
-                  />
-                  <Button
-                    onClick={handleCalculate}
-                    disabled={!staffedBeds || parseInt(staffedBeds) <= 0 || isCalculating}
-                    className="bg-orange-500 hover:bg-orange-600 text-white px-6 py-3 text-lg font-semibold"
-                  >
-                    {isCalculating ? "Calculating..." : "Calculate"}
-                  </Button>
-                  <Button
-                    onClick={handleReset}
-                    disabled={isCalculating}
-                    variant="outline"
-                    className="px-6 py-3 text-lg font-semibold border-gray-300 text-gray-600 hover:bg-gray-50"
-                  >
-                    Reset
-                  </Button>
-                </div>
+                <Input
+                  id="staffedBeds"
+                  type="number"
+                  min="1"
+                  placeholder="Enter number of staffed beds"
+                  value={staffedBeds}
+                  onChange={(e) => handleBedsInputChange(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' && staffedBeds && parseInt(staffedBeds) > 0 && !isCalculating) {
+                      handleCalculate();
+                    }
+                  }}
+                  className="text-lg py-3 focus:ring-2 focus:ring-conduit-orange focus:border-conduit-orange"
+                  disabled={isCalculating}
+                />
                 <p className="text-sm text-gray-500 mt-2">Enter the total number of staffed beds within your health system</p>
               </div>
 
               {/* Right Column - Revenue Leakage */}
               <div>
                 <Label htmlFor="annualRevenueLeakage" className="text-sm font-medium text-gray-700 mb-2">
-                  Add In Your Estimated Annual Revenue Leakage
+                  Estimated Annual Revenue Leakage
                 </Label>
                 <Input
                   id="annualRevenueLeakage"
@@ -459,6 +442,25 @@ export default function ROICalculator() {
                 />
                 <p className="text-sm text-gray-500 mt-2">Optional: Enter your estimated annual revenue leakage amount</p>
               </div>
+            </div>
+
+            {/* Calculate and Reset Buttons */}
+            <div className="flex gap-3 justify-center mt-6">
+              <Button
+                onClick={handleCalculate}
+                disabled={!staffedBeds || parseInt(staffedBeds) <= 0 || isCalculating}
+                className="bg-orange-500 hover:bg-orange-600 text-white px-8 py-3 text-lg font-semibold"
+              >
+                {isCalculating ? "Calculating..." : "Calculate"}
+              </Button>
+              <Button
+                onClick={handleReset}
+                disabled={isCalculating}
+                variant="outline"
+                className="px-8 py-3 text-lg font-semibold border-gray-300 text-gray-600 hover:bg-gray-50"
+              >
+                Reset
+              </Button>
             </div>
           </CardContent>
         </Card>
