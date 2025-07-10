@@ -278,7 +278,7 @@ export default function ROICalculator() {
 
 
 
-  const calculateROI = useCallback((beds: number): CalculationResults => {
+  const calculateROI = useCallback((beds: number, userAnnualRevenueLeakage?: number): CalculationResults => {
     // A. Investment
     // Total Annual Investment Cost = Number of Transfers Per Year * Variable TC Cost per Transfer
     const totalAnnualTransfers = beds * 12;
@@ -288,11 +288,10 @@ export default function ROICalculator() {
     // Annual Operational Costs Savings = Number of Staffed Beds * 2,000
     const annualOperationalCostSavings = beds * ANNUAL_OPERATIONAL_COST_SAVINGS_PER_BED;
     
-    // Revenue Leakage = Number of Staffed Beds * 12 * 10,000 * 0.2
-    const revenueLeakage = beds * 12 * 10000 * 0.2;
-    
-    // Recaptured Leakage Revenue = Revenue Leakage * 0.2 (20% capture rate)
-    const recapturedLeakageRevenue = revenueLeakage * 0.2;
+    // Recaptured Leakage Revenue = Annual Revenue Leakage * 20%
+    // Use user input if provided, otherwise fall back to calculated value
+    const annualRevenueLeakageAmount = userAnnualRevenueLeakage || (beds * 12 * 10000 * 0.2);
+    const recapturedLeakageRevenue = annualRevenueLeakageAmount * 0.2;
     
     // New Growth Revenue = (Number of Transfers Per Year * Generating New Inbound Volume Rate) * Net Revenue per Admission
     const newGrowthRevenue = (totalAnnualTransfers * NEW_INBOUND_VOLUME_GROWTH_RATE) * NET_REVENUE_PER_ADMISSION;
@@ -331,6 +330,7 @@ export default function ROICalculator() {
 
   const handleCalculate = async () => {
     const beds = parseInt(staffedBeds);
+    const userRevenueLeakage = annualRevenueLeakage ? parseInt(annualRevenueLeakage) : undefined;
     
     if (!beds || beds <= 0) {
       toast({
@@ -346,7 +346,7 @@ export default function ROICalculator() {
     // Simulate calculation time with animation
     await new Promise(resolve => setTimeout(resolve, 2000));
     
-    const calculationResults = calculateROI(beds);
+    const calculationResults = calculateROI(beds, userRevenueLeakage);
     setResults(calculationResults);
     setIsCalculating(false);
     setHasCalculated(true);
@@ -366,8 +366,7 @@ export default function ROICalculator() {
     { label: "Variable Cost per Transfer:", value: "$225" },
     { label: "Net Revenue per Admission:", value: "$10,000" },
     { label: "Annual Operational Cost Savings:", value: `$${ANNUAL_OPERATIONAL_COST_SAVINGS_PER_BED.toLocaleString()} per bed` },
-    { label: "Revenue Leakage Formula:", value: "Beds × 12 × $10,000 × 20%" },
-    { label: "Revenue Capture Rate:", value: "20% of leakage" },
+    { label: "Revenue Capture Rate:", value: "20% of annual revenue leakage" },
     { label: "New Inbound Volume Growth Rate:", value: "1%" },
     { label: "Annual Transfer Calculation:", value: "Beds × 12" }
   ];
@@ -688,7 +687,7 @@ export default function ROICalculator() {
                           </span>
                         </div>
                         <div className="text-sm text-gray-500 ml-4">
-                          Formula: ({formatNumber(parseInt(staffedBeds))} × 12 × $10,000 × 20%) × 20% = {formatCurrency(results.recapturedLeakageRevenue)}
+                          Formula: Annual Revenue Leakage × 20% = {formatCurrency(results.recapturedLeakageRevenue)}
                         </div>
                       </div>
                       
