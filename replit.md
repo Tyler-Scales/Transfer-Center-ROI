@@ -123,6 +123,11 @@ Changelog:
 - July 07, 2025. Updated ROI calculation to use user-inputted annual revenue leakage (Formula: Annual Revenue Leakage × 20%)
 - July 10, 2025. Changed email sender address to elahote@conduithp.com
 - July 10, 2025. Fixed ROI calculation formula to use Total Gross Financial Benefit / Investment Cost instead of Net Benefit / Investment Cost
+- July 10, 2025. Updated header text to highlight both required inputs in orange and mention estimated annual revenue leakage
+- July 10, 2025. Removed "Contact Conduit Health Partners Today" button from About section
+- July 10, 2025. Updated About section to mention "providers, payors and employers" instead of "provider groups, and health plans"
+- July 10, 2025. Removed "for your health system" references from ROI description and checkbox label for broader applicability
+- July 10, 2025. Revised checkbox label to provide clearer call-to-action about learning more from Conduit Health Partners team
 ```
 
 ## User Preferences
