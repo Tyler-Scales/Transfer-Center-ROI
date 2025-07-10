@@ -440,7 +440,7 @@ export default function ROICalculator() {
                   className="text-lg py-3 focus:ring-2 focus:ring-conduit-orange focus:border-conduit-orange"
                   disabled={isCalculating}
                 />
-                <p className="text-sm text-gray-500 mt-2">Optional: Enter your estimated annual revenue leakage amount</p>
+                <p className="text-sm text-gray-500 mt-2">Enter your estimated annual revenue leakage</p>
               </div>
             </div>
 
