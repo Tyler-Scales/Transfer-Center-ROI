@@ -32,6 +32,7 @@ interface CalculationResults {
 
 export default function ROICalculator() {
   const [staffedBeds, setStaffedBeds] = useState<string>("");
+  const [annualRevenueLeakage, setAnnualRevenueLeakage] = useState<string>("");
   const [results, setResults] = useState<CalculationResults | null>(null);
   const [emailTo, setEmailTo] = useState<string>("");
   const [isEmailDialogOpen, setIsEmailDialogOpen] = useState<boolean>(false);
@@ -353,6 +354,7 @@ export default function ROICalculator() {
 
   const handleReset = () => {
     setStaffedBeds("");
+    setAnnualRevenueLeakage("");
     setResults(null);
     setHasCalculated(false);
     setEmailTo("");
@@ -399,43 +401,64 @@ export default function ROICalculator() {
               <h3 className="text-xl font-semibold text-gray-900">Share About Your Health System</h3>
             </div>
             
-            <div className="max-w-md">
-              <Label htmlFor="staffedBeds" className="text-sm font-medium text-gray-700 mb-2">
-                Number of Staffed Beds
-              </Label>
-              <div className="flex gap-3">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              {/* Left Column - Staffed Beds */}
+              <div>
+                <Label htmlFor="staffedBeds" className="text-sm font-medium text-gray-700 mb-2">
+                  Number of Staffed Beds
+                </Label>
+                <div className="flex gap-3">
+                  <Input
+                    id="staffedBeds"
+                    type="number"
+                    min="1"
+                    placeholder="Enter number of staffed beds"
+                    value={staffedBeds}
+                    onChange={(e) => handleBedsInputChange(e.target.value)}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter' && staffedBeds && parseInt(staffedBeds) > 0 && !isCalculating) {
+                        handleCalculate();
+                      }
+                    }}
+                    className="text-lg py-3 focus:ring-2 focus:ring-conduit-orange focus:border-conduit-orange flex-1"
+                    disabled={isCalculating}
+                  />
+                  <Button
+                    onClick={handleCalculate}
+                    disabled={!staffedBeds || parseInt(staffedBeds) <= 0 || isCalculating}
+                    className="bg-orange-500 hover:bg-orange-600 text-white px-6 py-3 text-lg font-semibold"
+                  >
+                    {isCalculating ? "Calculating..." : "Calculate"}
+                  </Button>
+                  <Button
+                    onClick={handleReset}
+                    disabled={isCalculating}
+                    variant="outline"
+                    className="px-6 py-3 text-lg font-semibold border-gray-300 text-gray-600 hover:bg-gray-50"
+                  >
+                    Reset
+                  </Button>
+                </div>
+                <p className="text-sm text-gray-500 mt-2">Enter the total number of staffed beds within your health system</p>
+              </div>
+
+              {/* Right Column - Revenue Leakage */}
+              <div>
+                <Label htmlFor="annualRevenueLeakage" className="text-sm font-medium text-gray-700 mb-2">
+                  Add In Your Estimated Annual Revenue Leakage
+                </Label>
                 <Input
-                  id="staffedBeds"
+                  id="annualRevenueLeakage"
                   type="number"
-                  min="1"
-                  placeholder="Enter number of staffed beds"
-                  value={staffedBeds}
-                  onChange={(e) => handleBedsInputChange(e.target.value)}
-                  onKeyDown={(e) => {
-                    if (e.key === 'Enter' && staffedBeds && parseInt(staffedBeds) > 0 && !isCalculating) {
-                      handleCalculate();
-                    }
-                  }}
-                  className="text-lg py-3 focus:ring-2 focus:ring-conduit-orange focus:border-conduit-orange flex-1"
+                  min="0"
+                  placeholder="Enter estimated annual revenue leakage"
+                  value={annualRevenueLeakage}
+                  onChange={(e) => setAnnualRevenueLeakage(e.target.value)}
+                  className="text-lg py-3 focus:ring-2 focus:ring-conduit-orange focus:border-conduit-orange"
                   disabled={isCalculating}
                 />
-                <Button
-                  onClick={handleCalculate}
-                  disabled={!staffedBeds || parseInt(staffedBeds) <= 0 || isCalculating}
-                  className="bg-orange-500 hover:bg-orange-600 text-white px-6 py-3 text-lg font-semibold"
-                >
-                  {isCalculating ? "Calculating..." : "Calculate"}
-                </Button>
-                <Button
-                  onClick={handleReset}
-                  disabled={isCalculating}
-                  variant="outline"
-                  className="px-6 py-3 text-lg font-semibold border-gray-300 text-gray-600 hover:bg-gray-50"
-                >
-                  Reset
-                </Button>
+                <p className="text-sm text-gray-500 mt-2">Optional: Enter your estimated annual revenue leakage amount</p>
               </div>
-              <p className="text-sm text-gray-500 mt-2">Enter the total number of staffed beds within your health system</p>
             </div>
           </CardContent>
         </Card>
