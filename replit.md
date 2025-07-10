@@ -121,7 +121,7 @@ Changelog:
 - July 07, 2025. Simplified UI to only require staffed beds input, removing revenue leakage input field
 - July 07, 2025. Added "Estimated Annual Revenue Leakage" input field in two-column layout with repositioned Calculate/Reset buttons
 - July 07, 2025. Updated ROI calculation to use user-inputted annual revenue leakage (Formula: Annual Revenue Leakage × 20%)
-- July 07, 2025. Changed email sender address to akmartin@conduithp.com
+- July 10, 2025. Changed email sender address to elahote@conduithp.com
 ```
 
 ## User Preferences
