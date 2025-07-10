@@ -511,7 +511,7 @@ export default function ROICalculator() {
                     An ROI of <span className="font-bold text-orange-600">{formatROIRatio(results.finalROI)}</span> means 
                     that for every <span className="font-semibold">$1</span> invested in your transfer center operations, 
                     you can expect to receive <span className="font-bold text-green-600">${(results.finalROI / 100).toFixed(2)}</span> in return. 
-                    This represents a highly favorable investment opportunity for your health system.
+                    This represents a highly favorable investment opportunity.
                   </p>
                 </div>
               </div>
