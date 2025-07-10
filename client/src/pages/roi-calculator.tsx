@@ -42,7 +42,7 @@ export default function ROICalculator() {
   const { toast } = useToast();
   
   // Fixed sender email address
-  const fromEmail = "tyler.wallace@scalestreet.com";
+  const fromEmail = "akmartin@conduithp.com";
 
   const formatCurrency = (amount: number): string => {
     return new Intl.NumberFormat('en-US', {
