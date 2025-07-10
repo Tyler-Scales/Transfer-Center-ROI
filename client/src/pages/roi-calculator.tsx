@@ -775,11 +775,7 @@ export default function ROICalculator() {
                   />
                 </div>
 
-                <div className="text-center">
-                  <Button className="bg-conduit-orange hover:bg-orange-600 text-white px-8 py-3 rounded-lg font-semibold text-lg">
-                    Contact Conduit Health Partners Today
-                  </Button>
-                </div>
+
               </CardContent>
             </Card>
 
