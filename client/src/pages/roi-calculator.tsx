@@ -531,7 +531,7 @@ export default function ROICalculator() {
                       className="mt-1"
                     />
                     <label htmlFor="teamContact" className="text-sm text-gray-600 leading-relaxed cursor-pointer">
-                      Check this box if to hear from our team about potential return on investment from partnering with Conduit Health Partners.
+                      Check this box to hear from our team about your potential return on investment from partnering with Conduit Health Partners.
                     </label>
                   </div>
                 </div>
