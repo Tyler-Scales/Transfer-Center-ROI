@@ -764,7 +764,7 @@ export default function ROICalculator() {
                 </div>
                 
                 <p className="text-gray-700 text-lg mb-6 leading-relaxed">
-                  We are a nurse-led organization that partners with health care organizations to connect patients with the right care at the right time. Our solutions improve access, optimize resources, and support growth across <span className="font-bold text-conduit-orange">health systems</span>, <span className="font-bold text-conduit-orange">provider groups</span>, and <span className="font-bold text-conduit-orange">health plans</span>.
+                  We are a nurse-led organization that partners with health care organizations to connect patients with the right care at the right time. Our solutions improve access, optimize resources, and support growth across <span className="font-bold text-conduit-orange">health systems</span>, <span className="font-bold text-conduit-orange">providers</span>, <span className="font-bold text-conduit-orange">payors</span> and <span className="font-bold text-conduit-orange">employers</span>.
                 </p>
 
                 <div className="mb-6">
