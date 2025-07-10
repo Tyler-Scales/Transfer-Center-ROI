@@ -122,6 +122,7 @@ Changelog:
 - July 07, 2025. Added "Estimated Annual Revenue Leakage" input field in two-column layout with repositioned Calculate/Reset buttons
 - July 07, 2025. Updated ROI calculation to use user-inputted annual revenue leakage (Formula: Annual Revenue Leakage × 20%)
 - July 10, 2025. Changed email sender address to elahote@conduithp.com
+- July 10, 2025. Fixed ROI calculation formula to use Total Gross Financial Benefit / Investment Cost instead of Net Benefit / Investment Cost
 ```
 
 ## User Preferences

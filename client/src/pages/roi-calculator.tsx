@@ -303,8 +303,8 @@ export default function ROICalculator() {
     // Net Annual Financial Benefit = Total Gross Financial Benefit - Total Annual Investment Cost
     const netAnnualFinancialBenefit = totalGrossFinancialBenefit - totalAnnualInvestmentCost;
 
-    // Return on Investment (ROI %) = (Net Annual Financial Benefit / Total Annual Investment Cost) * 100
-    const finalROI = (netAnnualFinancialBenefit / totalAnnualInvestmentCost) * 100;
+    // Return on Investment (ROI %) = (Total Gross Financial Benefit / Total Annual Investment Cost) * 100
+    const finalROI = (totalGrossFinancialBenefit / totalAnnualInvestmentCost) * 100;
 
     return {
       totalAnnualTransfers,
