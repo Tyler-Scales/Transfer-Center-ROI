@@ -128,6 +128,7 @@ Changelog:
 - July 10, 2025. Updated About section to mention "providers, payors and employers" instead of "provider groups, and health plans"
 - July 10, 2025. Removed "for your health system" references from ROI description and checkbox label for broader applicability
 - July 10, 2025. Revised checkbox label to provide clearer call-to-action about learning more from Conduit Health Partners team
+- July 14, 2025. Removed email functionality including email results button, dialog, and team contact checkbox from ROI results section
 ```
 
 ## User Preferences
